@@ -1,0 +1,8 @@
+.color-bar .color-segment {
+    flex: 1;
+    display: block;
+}
+
+.color-bar .color-segment:hover {
+    opacity: 0.8;
+}
