@@ -241,3 +241,69 @@ section p {
 section p strong {
     color: #2c3e50;
 }
+
+/* Estilo para la sección de Blog */
+#blog {
+    padding: 60px 0;
+    background-color: #f9f9f9;
+}
+
+#blog h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+#blog p.text-center {
+    font-size: 1.1rem;
+    color: #6c757d;
+}
+
+#blog .card {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#blog .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* styles.css */
+
+/* Estilos para las imágenes con leyendas en los Blog Posts */
+.figure {
+    margin-bottom: 1.5rem;
+}
+
+.figure img {
+    max-width: 100%;
+    height: auto;
+}
+
+.figure-caption {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-top: 0.5rem;
+}
+
+/* Estilos para la sección del Blog Post */
+#blog-post h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+#blog-post p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+#blog-post h3 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+#blog-post ol,
+#blog-post ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}

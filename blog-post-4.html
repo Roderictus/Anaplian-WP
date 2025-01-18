@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Anaplian - Desarrollo de un Dashboard Automatizado para Monitoreo de Parques Nacionales</title>
+    <!-- Responsive Meta Tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Anaplian comienza el año 2025 con avances en el desarrollo de un dashboard automatizado para el monitoreo de Parques Nacionales.">
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Anaplian - Desarrollo de un Dashboard Automatizado para Monitoreo de Parques Nacionales">
+    <meta property="og:description" content="Descubre cómo Anaplian está desarrollando herramientas avanzadas para la protección y monitoreo de Parques Nacionales en México.">
+    <meta property="og:image" content="Images/blog/blog-post-4.jpg">
+    <meta property="og:url" content="https://anaplian.com/blog-post-4.html">
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Anaplian</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <!-- Existing navigation links -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#hero">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#who-we-are">Who We Are</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#our-approach">Our Approach</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#case-studies">Case Studies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="national-parks.html">National Parks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Post Content -->
+    <section id="blog-post" class="mt-5">
+        <div class="container">
+            <h1>Desarrollo de un Dashboard Automatizado para Monitoreo de Parques Nacionales</h1>
+            <p class="text-muted">Publicado el 27 de abril de 2024 por Rodrigo Franco</p>
+            <img src="Images/blog/blog-post-4.jpg" class="img-fluid mb-4" alt="Dashboard Automatizado para Monitoreo de Parques Nacionales">
+            <p>Anaplian comienza el año 2025 con avances en uno de nuestros proyectos públicos favoritos: el desarrollo de un dashboard automatizado para el monitoreo de Parques Nacionales.</p>
+            <p>Concebido como una herramienta multipropósito, nos enfocamos en el monitoreo de Áreas Naturales Protegidas (ANP) en México. Debido a que existen diferentes designaciones de ANP con variados grados de protección, decidimos concentrarnos en la categoría más restrictiva: Parques Nacionales.</p>
+            
+            <figure class="figure">
+                <img src="Images/blog/blog-post-4-image1.jpg" class="figure-img img-fluid rounded" alt="Descripción de la imagen 1">
+                <figcaption class="figure-caption text-center">Figura 1: Dashboard automatizado en acción.</figcaption>
+            </figure>
+            
+            <p>Para obtener los shapefiles que definen los límites de estos parques, utilizamos la base de datos de Protected Planet. Los datos satelitales, con una resolución de 10 metros por píxel, fueron generados creando imágenes compuestas en Google Earth Engine—una excelente fuente de datos públicos que es fácilmente accesible mediante Java o Python.</p>
+            
+            <figure class="figure">
+                <img src="Images/blog/blog-post-4-image2.jpg" class="figure-img img-fluid rounded" alt="Descripción de la imagen 2">
+                <figcaption class="figure-caption text-center">Figura 2: Shapefiles de los Parques Nacionales.</figcaption>
+            </figure>
+            
+            <p>Desarrollamos diversas funciones para producir series de tiempo de imágenes utilizando bandas infrarrojas, de agua y de vegetación. En los videos, utilizamos color verdadero, pero para el análisis de vegetación empleamos bandas adicionales para calcular cambios vegetativos. En este caso, utilizamos NDVI, aunque continuamos explorando técnicas de vanguardia en este campo.</p>
+            
+            <figure class="figure">
+                <img src="Images/blog/blog-post-4-image3.jpg" class="figure-img img-fluid rounded" alt="Descripción de la imagen 3">
+                <figcaption class="figure-caption text-center">Figura 3: Análisis de vegetación utilizando NDVI.</figcaption>
+            </figure>
+            
+            <h3>Ventajas Clave de este Enfoque</h3>
+            <ol>
+                <li><strong>Metodologías aplicables a cualquier región del mundo:</strong> Esto las hace altamente comparables.</li>
+                <li><strong>Bajo costo de adquisición de imágenes:</strong> Optimización de recursos.</li>
+                <li><strong>Independencia de información generada oficialmente:</strong> Mayor flexibilidad y acceso.</li>
+            </ol>
+            <p>Resumimos estas ventajas en tres cualidades fundamentales para la protección ambiental: comparabilidad, escalabilidad e independencia. Nos emociona estar en un punto en el tiempo donde la calidad de nuestras herramientas—tanto para el análisis como para la adquisición de datos—nos permite abordar este y muchos otros desafíos análogos.</p>
+            <p>Aquí presentamos una vista previa de nuestros resultados iniciales e invitamos a visitar la página periódicamente para actualizaciones.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p>&copy; 2024 Anaplian</p>
+            <div class="social-icons">
+                <a href="#" class="text-white mx-2"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-white mx-2"><i class="fab fa-linkedin"></i></a>
+                <!-- Add more social icons as needed -->
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle (Includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
