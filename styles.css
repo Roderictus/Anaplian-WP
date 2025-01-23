@@ -332,3 +332,7 @@ section p strong {
     margin-left: 20px;
     margin-bottom: 15px;
 }
+
+#park-details, #video-gallery {
+    transition: all 0.5s ease;
+}
