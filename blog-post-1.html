@@ -10,8 +10,8 @@
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Anaplian - Desarrollo de un Dashboard Automatizado para Monitoreo de Parques Nacionales">
     <meta property="og:description" content="Descubre cómo Anaplian está desarrollando herramientas avanzadas para la protección y monitoreo de Parques Nacionales en México.">
-    <meta property="og:image" content="Images/blog/blog-post-1.jpg">
-    <meta property="og:url" content="https://anaplian.com/blog-post-4.html">
+    <meta property="og:image" content="Images/Dashboard">
+    <meta property="og:url" content="https://anaplian.com/blog-post-1.html">
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <!-- Google Fonts -->
@@ -68,36 +68,40 @@
 
            
             
-            <div class="mb-4">
-                <video controls class="img-fluid">
-                    <source src="Videos/Optimized/Bosencheve_True_Color_10m_M_additive.mp4" type="video/mp4">
-                    Tu navegador no soporta el elemento de video.
-                </video>
-                <figcaption class="figure-caption text-center">Figura 1: Vista previa del dashboard automatizado en acción.</figcaption>
+            <div class="mb-4 text-center">
+                <figure class="figure d-inline-block">
+                    <img src="Images/blog/Vista_del_Dashboard.png" class="figure-img img-fluid rounded" alt="Vista del Dashboard">
+                    <figcaption class="figure-caption text-center">Figura 1: Vista del Dashboard.</figcaption>
+                </figure>
             </div>
             
             
             <p>Anaplian comienza el año 2025 con avances en uno de nuestros proyectos públicos favoritos: el desarrollo de un dashboard automatizado para el monitoreo de Parques Nacionales.</p>
-            <p>Concebido como una herramienta multipropósito, nos enfocamos en el monitoreo de Áreas Naturales Protegidas (ANP) en México. Debido a que existen diferentes designaciones de ANP con variados grados de protección, decidimos concentrarnos en la categoría más restrictiva: Parques Nacionales.</p>
-            
-            <figure class="figure">
-                <img src="Images/blog/blog-post-1-image1.jpg" class="figure-img img-fluid rounded" alt="Descripción de la imagen 1">
-                <figcaption class="figure-caption text-center">Figura 1: Dashboard automatizado en acción.</figcaption>
-            </figure>
+            <p>Concebido como una herramienta multipropósito, nos enfocamos 1en el monitoreo de Áreas Naturales Protegidas (ANP) en México. Debido a que existen diferentes designaciones de ANP con variados grados de protección, decidimos concentrarnos en la categoría más restrictiva: Parques Nacionales.</p>
+            <div class="mb-4 text-center">
+                <figure class="figure d-inline-block">
+                    <img src="Images/blog/Protected_Planet_Map.png" class="figure-img img-fluid rounded" alt="Mapa de México con Áreas Naturales Protegidas identificadas">
+                    <figcaption class="figure-caption text-center">Figura 2: Mapas de México con Áreas Naturales Protegidas identificadas.</figcaption>
+                </figure>
+            </div>
             
             <p>Para obtener los shapefiles que definen los límites de estos parques, utilizamos la base de datos de Protected Planet. Los datos satelitales, con una resolución de 10 metros por píxel, fueron generados creando imágenes compuestas en Google Earth Engine—una excelente fuente de datos públicos que es fácilmente accesible mediante Java o Python.</p>
             
-            <figure class="figure">
-                <img src="Images/blog/blog-post-1-image2.jpg" class="figure-img img-fluid rounded" alt="Descripción de la imagen 2">
-                <figcaption class="figure-caption text-center">Figura 2: Shapefiles de los Parques Nacionales.</figcaption>
-            </figure>
+            <div class="mb-4 text-center">
+                <figure class="figure d-inline-block">
+                    <img src="Images/blog/ANP_232.jpg" class="figure-img img-fluid rounded" alt="Descripción de la imagen 2">
+                    <figcaption class="figure-caption text-center">Figura 3: Shapefiles de los Parques Nacionales.</figcaption>
+                </figure>
+            </div>
             
             <p>Desarrollamos diversas funciones para producir series de tiempo de imágenes utilizando bandas infrarrojas, de agua y de vegetación. En los videos, utilizamos color verdadero, pero para el análisis de vegetación empleamos bandas adicionales para calcular cambios vegetativos. En este caso, utilizamos NDVI, aunque continuamos explorando técnicas de vanguardia en este campo.</p>
             
-            <figure class="figure">
-                <img src="Images/blog/blog-post-1-image3.jpg" class="figure-img img-fluid rounded" alt="Descripción de la imagen 3">
-                <figcaption class="figure-caption text-center">Figura 3: Análisis de vegetación utilizando NDVI.</figcaption>
-            </figure>
+            <div class="mb-4 text-center">
+                <figure class="figure d-inline-block">
+                    <img src="Images/blog/Palenque_Vegetation_Ratio.png" class="figure-img img-fluid rounded" alt="Análisis de vegetación utilizando NDVI">
+                    <figcaption class="figure-caption text-center">Figura 4: Análisis de vegetación utilizando NDVI.</figcaption>
+                </figure>
+            </div>
             
             <h3>Ventajas Clave de este Enfoque</h3>
             <ol>
@@ -107,6 +111,11 @@
             </ol>
             <p>Resumimos estas ventajas en tres cualidades fundamentales para la protección ambiental: comparabilidad, escalabilidad e independencia. Nos emociona estar en un punto en el tiempo donde la calidad de nuestras herramientas—tanto para el análisis como para la adquisición de datos—nos permite abordar este y muchos otros desafíos análogos.</p>
             <p>Aquí presentamos una vista previa de nuestros resultados iniciales e invitamos a visitar la página periódicamente para actualizaciones.</p>
+
+            <!-- Botón para ir a la página de Parques Nacionales -->
+            <a href="national-parks.html" class="btn btn-primary mt-4">
+                <i class="fas fa-tree me-2"></i>Ver Parques Nacionales
+            </a>
         </div>
     </section>
 

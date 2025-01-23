@@ -336,3 +336,36 @@ section p strong {
 #park-details, #video-gallery {
     transition: all 0.5s ease;
 }
+
+/* Clase personalizada para el botón naranja grande y centrado */
+.btn-orange {
+    background-color: orange;
+    color: white;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-orange:hover {
+    background-color: darkorange;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Clase personalizada para centrar todas las figuras */
+.centered-figure {
+    display: inline-block;
+}
+
+.text-center-container {
+    text-align: center;
+}
+
+.bg-light-turquoise {
+    background-color: #5dad76; /* Light Turquoise */
+    padding: 60px 0; /* Optional: Add padding for better spacing */
+}
+
+.bg-dark-orange {
+    background-color: #FF8C00; /* Dark Orange */
+    padding: 60px 0; /* Optional: Add padding for better spacing */
+}
