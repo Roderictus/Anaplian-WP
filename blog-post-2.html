@@ -2,16 +2,16 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Anaplian - Desarrollo de un Dashboard Automatizado para Monitoreo de Parques Nacionales</title>
+    <title>Diagnóstico de Áreas Naturales Protegidas en México</title>
     <!-- Responsive Meta Tag -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Anaplian comienza el año 2025 con avances en el desarrollo de un dashboard automatizado para el monitoreo de Parques Nacionales.">
+    <meta name="description" content="Anaplian presenta un diagnóstico de las Áreas Naturales Protegidas en México, analizando la realidad de los Parques Nacionales.">
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Anaplian - Desarrollo de un Dashboard Automatizado para Monitoreo de Parques Nacionales">
-    <meta property="og:description" content="Descubre cómo Anaplian está desarrollando herramientas avanzadas para la protección y monitoreo de Parques Nacionales en México.">
-    <meta property="og:image" content="Images/Dashboard">
-    <meta property="og:url" content="https://anaplian.com/blog-post-1.html">
+    <meta property="og:title" content="Anaplian - Diagnóstico de Áreas Naturales Protegidas en México">
+    <meta property="og:description" content="Descubre el diagnóstico realizado por Anaplian sobre los Parques Nacionales en México, evaluando el uso de la tierra y la cobertura de suelo.">
+    <meta property="og:image" content="Images\Blog\La_Monta_a_Malinche_o_Matlalcu_yatl_V1_0.png">
+    <meta property="og:url" content="https://anaplian.com/blog-post-2.html">
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <!-- Google Fonts -->
@@ -63,59 +63,48 @@
     <!-- Blog Post Content -->
     <section id="blog-post" class="mt-5">
         <div class="container">
-            <h1>Desarrollo de un Dashboard Automatizado para Monitoreo de Parques Nacionales</h1>
-            <p class="text-muted">Publicado el 22 de enero de 2025 por Rodrigo Franco</p>
-
-           
+            <h1>Diagnóstico de Áreas Naturales Protegidas en México</h1>
+            <p class="text-muted">Publicado el 11 de febrero de 2025 por Rodrigo Franco</p>
+            
+            <p>Motivados por nuestra pasión por el senderismo y alertados por el deterioro visible de algunas rutas, varios integrantes del equipo de Anaplian, junto con México en Datos, decidimos realizar un diagnóstico de las Áreas Naturales Protegidas ante la falta de datos oficiales. Empezamos por la categoría de conservación más estricta, los Parques Nacionales, cuya denominación evoca la imagen de zonas enteramente dedicadas a la preservación de ecosistemas. Sin embargo, en México, esta imagen idealizada no corresponde con la realidad, ya que en la práctica conviven áreas destinadas a la conservación con espacios donde se desarrollan actividades agrícolas y, en menor medida, construcciones residenciales.</p>
+            
+            <p>En el país, el marco legal se sustenta en la Ley General del Equilibrio Ecológico y la Protección al Ambiente (LGEEPA) y sus reglamentos, que establecen las bases para conservar la biodiversidad y la integridad de los ecosistemas en estos espacios. Concretamente, la normativa prohíbe la explotación intensiva en el núcleo de protección de los parques nacionales para evitar la degradación del ecosistema. Asimismo, la construcción residencial está generalmente vetada en el núcleo de alta protección para prevenir la fragmentación de hábitats y la presión antropogénica; sin embargo, en la práctica se observan convivencias de usos agrícolas y algunas edificaciones, lo que confiere a estos parques un estatus de protección más ambiguo en comparación con modelos más estrictos, como el de Estados Unidos.</p>
+            
+            <p>En Anaplian tenemos la respuesta para evaluar esta realidad. Procesamos todas las Áreas Naturales Protegidas utilizando las delimitaciones oficiales –proporcionadas por Protected Planet– junto con el modelo de asignación de cobertura de la Agencia Espacial Europea (ESA) para 2021, contando los píxeles de cada categoría para obtener sus proporciones.</p>
+            
+            <p>Un primer paso para comprender la situación es analizar las fotografías satelitales: en un composite mensual de más de cinco años, se puede apreciar la naturaleza cíclica de los cultivos en laderas y la presencia de construcciones, sin evidencia clara de una expansión de estos usos ni de áreas fácilmente explotables.</p>
+            
+            <div class="mb-4 text-center">
+                <!-- Video embed placeholder para Malinche -->
+                <iframe width="560" height="315" src="Videos\Original\La_Monta_a_Malinche_o_Matlalcu_yatl_True_Color_10m_M_additive.mp4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <figcaption class="figure-caption text-center">
+                    Video: Malinche - Se aprecia la naturaleza cíclica de los cultivos en las laderas y la presencia de construcciones.
+                </figcaption>
+            </div>
+            
+            <p>Estos son los resultados del modelo de cobertura:</p>
             
             <div class="mb-4 text-center">
                 <figure class="figure d-inline-block">
-                    <img src="Images/blog/Vista_del_Dashboard.png" class="figure-img img-fluid rounded" alt="Vista del Dashboard">
-                    <figcaption class="figure-caption text-center">Figura 1: Vista del Dashboard.</figcaption>
+                    <img src="Images\Blog\La_Monta_a_Malinche_o_Matlalcu_yatl_V1_0.png" class="figure-img img-fluid rounded" alt="Imagen cobertura Malinche">
+                    <figcaption class="figure-caption text-center">Imagen: Cobertura Malinche</figcaption>
                 </figure>
             </div>
             
-            
-            <p>Anaplian comienza el año 2025 con avances en uno de nuestros proyectos públicos favoritos: el desarrollo de un dashboard automatizado para el monitoreo de Parques Nacionales.</p>
-            <p>Concebido como una herramienta multipropósito, nos enfocamos 1en el monitoreo de Áreas Naturales Protegidas (ANP) en México. Debido a que existen diferentes designaciones de ANP con variados grados de protección, decidimos concentrarnos en la categoría más restrictiva: Parques Nacionales.</p>
-            <div class="mb-4 text-center">
-                <figure class="figure d-inline-block">
-                    <img src="Images/blog/Protected_Planet_Map.png" class="figure-img img-fluid rounded" alt="Mapa de México con Áreas Naturales Protegidas identificadas">
-                    <figcaption class="figure-caption text-center">Figura 2: Mapas de México con Áreas Naturales Protegidas identificadas.</figcaption>
-                </figure>
-            </div>
-            
-            <p>Para obtener los shapefiles que definen los límites de estos parques, utilizamos la base de datos de Protected Planet. Los datos satelitales, con una resolución de 10 metros por píxel, fueron generados creando imágenes compuestas en Google Earth Engine—una excelente fuente de datos públicos que es fácilmente accesible mediante Java o Python.</p>
+            <p>Los usos de cobertura en este Parque Nacional son:</p>
             
             <div class="mb-4 text-center">
                 <figure class="figure d-inline-block">
-                    <img src="Images/blog/ANP_232.jpg" class="figure-img img-fluid rounded" alt="Descripción de la imagen 2">
-                    <figcaption class="figure-caption text-center">Figura 3: Shapefiles de los Parques Nacionales.</figcaption>
+                    <img src="Images\Blog\Malinche_tabla_cobertura.png" class="figure-img img-fluid rounded" alt="Imagen tabla cobertura">
+                    <figcaption class="figure-caption text-center">Imagen: Tabla de Cobertura</figcaption>
                 </figure>
             </div>
             
-            <p>Desarrollamos diversas funciones para producir series de tiempo de imágenes utilizando bandas infrarrojas, de agua y de vegetación. En los videos, utilizamos color verdadero, pero para el análisis de vegetación empleamos bandas adicionales para calcular cambios vegetativos. En este caso, utilizamos NDVI, aunque continuamos explorando técnicas de vanguardia en este campo.</p>
+            <p>La Malinche no es un outlier en comparación con otros Parques Nacionales, a pesar de que, en el estatus protegido, más del 23% del parque está ocupado por cultivos o construcciones.</p>
             
-            <div class="mb-4 text-center">
-                <figure class="figure d-inline-block">
-                    <img src="Images/blog/Palenque_Vegetation_Ratio.png" class="figure-img img-fluid rounded" alt="Análisis de vegetación utilizando NDVI">
-                    <figcaption class="figure-caption text-center">Figura 4: Análisis de vegetación utilizando NDVI.</figcaption>
-                </figure>
-            </div>
+            <p>Próximamente, incorporaremos estos resultados para todas las ANP en Anaplian.com, extenderemos el ejercicio a otros países (¡estamos considerando Indonesia y recibimos ideas!), actualizaremos nuestra página para reflejar la naturaleza internacional del equipo (México, Estados Unidos y Francia) y seguiremos perfeccionando nuestros modelos dinámicos de análisis de las ANP, en especial en lo que respecta al agua y a los cultivos, en línea con nuestra familia de modelos predictivos de precios de commodities.</p>
             
-            <h3>Ventajas Clave de este Enfoque</h3>
-            <ol>
-                <li><strong>Metodologías aplicables a cualquier región del mundo:</strong> Esto las hace altamente comparables.</li>
-                <li><strong>Bajo costo de adquisición de imágenes:</strong> Optimización de recursos.</li>
-                <li><strong>Independencia de información generada oficialmente:</strong> Mayor flexibilidad y acceso.</li>
-            </ol>
-            <p>Resumimos estas ventajas en tres cualidades fundamentales para la protección ambiental: comparabilidad, escalabilidad e independencia. Nos emociona estar en un punto en el tiempo donde la calidad de nuestras herramientas—tanto para el análisis como para la adquisición de datos—nos permite abordar este y muchos otros desafíos análogos.</p>
-            <p>Aquí presentamos una vista previa de nuestros resultados iniciales e invitamos a visitar la página periódicamente para actualizaciones.</p>
-
-            <!-- Botón para ir a la página de Parques Nacionales -->
-            <a href="national-parks.html" class="btn btn-primary mt-4">
-                <i class="fas fa-tree me-2"></i>Ver Parques Nacionales
-            </a>
+            <p>¿Te interesa ver el comportamiento de alguna otra ANP? Lo incluiremos en nuestras actualizaciones o podrás buscarlo en la página cuando se actualice.</p>
         </div>
     </section>
 
@@ -124,8 +113,7 @@
         <div class="container text-center">
             <p>&copy; 2024 Anaplian</p>
             <div class="social-icons">
-                
-                <a href=""https://www.linkedin.com/company/anaplian/about/"" class="text-white mx-2"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.linkedin.com/company/anaplian/about/" class="text-white mx-2"><i class="fab fa-linkedin"></i></a>
                 <!-- Add more social icons as needed -->
             </div>
         </div>
