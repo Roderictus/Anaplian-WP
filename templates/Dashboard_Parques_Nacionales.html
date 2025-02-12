@@ -73,6 +73,40 @@
         </div>
     </section>
 
+
+<!-- Land Cover Chart Section -->
+<section id="land-cover-chart" class="mt-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Cobertura del Suelo en Parques Nacionales</h2>
+        <p class="text-center">Selecciona un parque nacional para ver su composición de cobertura del suelo y la de los siguientes siete parques.</p>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form id="chartForm">
+                    <select id="parkSelect" class="form-select">
+                        {% for park in parks %}
+                            <option value="{{ park }}" {% if park == selected_park %}selected{% endif %}>{{ park }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-primary mt-3">Generar Gráfico</button>
+                </form>
+            </div>
+        </div>
+        <br>
+        <div class="text-center">
+            <img id="chartImage" src="{{ url_for('plot', park=selected_park if selected_park else parks[0]) }}" alt="Land Cover Chart" class="img-fluid">
+        </div>
+    </div>
+</section>
+
+<!-- JavaScript to Handle Dropdown Selection and Chart Update -->
+<script>
+    document.getElementById("chartForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        var selectedPark = document.getElementById("parkSelect").value;
+        document.getElementById("chartImage").src = "/plot?park=" + encodeURIComponent(selectedPark);
+    });
+</script>
+
     <!-- Introductory Text Section -->
     <section id="introduction" class="mt-5">
         <div class="container">
@@ -109,6 +143,18 @@
             </div>
         </div>
     </section>
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- Video Gallery Section -->
     <section id="video-gallery" class="mt-5">
