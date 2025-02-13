@@ -74,36 +74,70 @@
     </section>
 
 
-<!-- Land Cover Chart Section -->
-<section id="land-cover-chart" class="mt-5">
-    <div class="container">
-        <h2 class="text-center mb-4">Cobertura del Suelo en Parques Nacionales</h2>
-        <p class="text-center">Selecciona un parque nacional para ver su composición de cobertura del suelo y la de los siguientes siete parques.</p>
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <form id="chartForm">
-                    <select id="parkSelect" class="form-select">
-                        {% for park in parks %}
-                            <option value="{{ park }}" {% if park == selected_park %}selected{% endif %}>{{ park }}</option>
-                        {% endfor %}
-                    </select>
-                    <button type="submit" class="btn btn-primary mt-3">Generar Gráfico</button>
-                </form>
+    <section id="dashboard" class="mt-5">
+        <div class="container">
+          <!-- Top Section: Title, Description and Dropdown -->
+          <div class="row">
+            <div class="col-12 text-center">
+              <h2 class="mb-4">Cobertura del Suelo en Parques Nacionales</h2>
+              <p>Selecciona un parque nacional para ver su composición de cobertura del suelo y la de los siguientes siete parques.</p>
+              <form id="chartForm" method="GET" action="{{ url_for('national_parks') }}">
+                <select id="parkSelect" name="park" class="form-select d-inline-block w-auto">
+                  {% for park in parks %}
+                    <option value="{{ park }}" {% if park == selected_park %}selected{% endif %}>{{ park }}</option>
+                  {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary mt-3">Generar Gráfico</button>
+              </form>
             </div>
+          </div>
+      
+          <!-- Bottom Section: Park Image (Left) and Graph (Right) -->
+          <div class="row mt-5">
+            <!-- Left Column: Park Image -->
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+              {% if image_filename %}
+                <img id="leftParkImage" src="{{ url_for('static', filename='images/' ~ image_filename) }}" alt="Imagen para {{ selected_park }}" class="img-fluid">
+              {% else %}
+                <p id="leftParkPlaceholder">No se encontró imagen para {{ selected_park }}</p>
+              {% endif %}
+            </div>
+            <!-- Right Column: Graph -->
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+              <img id="chartImage" src="{{ url_for('plot', park=selected_park if selected_park else parks[0]) }}" alt="Land Cover Chart" class="img-fluid">
+            </div>
+          </div>
         </div>
-        <br>
-        <div class="text-center">
-            <img id="chartImage" src="{{ url_for('plot', park=selected_park if selected_park else parks[0]) }}" alt="Land Cover Chart" class="img-fluid">
-        </div>
-    </div>
-</section>
+      </section>
+      
 
 <!-- JavaScript to Handle Dropdown Selection and Chart Update -->
 <script>
     document.getElementById("chartForm").addEventListener("submit", function(event) {
         event.preventDefault();
-        var selectedPark = document.getElementById("parkSelect").value;
-        document.getElementById("chartImage").src = "/plot?park=" + encodeURIComponent(selectedPark);
+        const selectedPark = document.getElementById("parkSelect").value;
+        const url = "{{ url_for('national_parks') }}?park=" + encodeURIComponent(selectedPark);
+
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                // Crea un contenedor temporal para parsear la respuesta HTML
+                const tempDiv = document.createElement("div");
+                tempDiv.innerHTML = html;
+
+                // Extrae el nuevo bloque de imagen (suponiendo que esté dentro de un contenedor identificable)
+                const newImage = tempDiv.querySelector("#leftParkImage");
+                const newPlaceholder = tempDiv.querySelector("#leftParkPlaceholder");
+
+                if(newImage) {
+                    // Actualizamos el src de la imagen en la columna izquierda
+                    document.getElementById("leftParkImage").src = newImage.src;
+                } else if(newPlaceholder) {
+                    // Si no se encontró imagen, actualizamos el mensaje de placeholder
+                    document.getElementById("leftParkImage").outerHTML = newPlaceholder.outerHTML;
+                }
+            })
+            .catch(err => console.error("Error actualizando la imagen:", err));
     });
 </script>
 
