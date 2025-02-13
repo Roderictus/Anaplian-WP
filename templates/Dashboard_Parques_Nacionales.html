@@ -92,10 +92,36 @@
             </div>
           </div>
       
-          <!-- Bottom Section: Park Image (Left) and Graph (Right) -->
+          <!-- Bottom Section: Coverage Table and Park Image (Left) and Graph (Right) -->
           <div class="row mt-5">
-            <!-- Left Column: Park Image -->
-            <div class="col-md-6 d-flex align-items-center justify-content-center">
+            <!-- Left Column: Coverage Table and Park Image -->
+            <div class="col-md-6">
+              <!-- Coverage Table -->
+              <div class="table-responsive mb-3">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Tipo de Cobertura</th>
+                      <th>Porcentaje (%)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if coverage_data %}
+                      {% for cover, percentage in coverage_data.items() %}
+                        <tr>
+                          <td>{{ cover }}</td>
+                          <td>{{ percentage }}</td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
+                      <tr>
+                        <td colspan="2">No hay datos disponibles</td>
+                      </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- Park Image -->
               {% if image_filename %}
                 <img id="leftParkImage" src="{{ url_for('static', filename='images/' ~ image_filename) }}" alt="Imagen para {{ selected_park }}" class="img-fluid">
               {% else %}
