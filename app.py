@@ -65,6 +65,7 @@ def national_parks():
                            image_filename=image_filename)
 
 @app.route("/plot")
+@app.route("/plot")
 def plot():
     park_name = request.args.get("park", df["Name"].iloc[0])
     start_index = df[df["Name"] == park_name].index[0] if park_name in df["Name"].values else 0
@@ -73,17 +74,66 @@ def plot():
     fig, ax = plt.subplots(figsize=(12, 6))
     indices = range(len(df_subset))
     
-    # Initialize as a numpy array for proper element-wise addition
+    # Initialize bottom for stacking
     bottom_values = np.zeros(len(df_subset))
+    
+    # Mapping each land cover column to its corresponding key in the color maps
+    land_cover_mapping = {
+        "Percentage_Tree_Cover": 10,
+        "Percentage_Shrubland": 20,
+        "Percentage_Grassland": 30,
+        "Percentage_Cropland": 40,
+        "Percentage_Built-up": 50,
+        "Percentage_Bare_Sparse_Vegetation": 60,
+        "Percentage_Snow_and_Ice": 70,
+        "Percentage_Permanent_Water_body": 80,
+        "Percentage_Herbaceous_Wetland": 90,
+        "Percentage_Mangrove": 95,
+        "Percentage_Moss_and_Lichen": 100,
+    }
+
+    # Your custom color map (RGB values in 0-255) and labels
+    worldcover_color_map = { 
+        10: (0, 100, 0),       # Tree cover
+        20: (192, 192, 0),     # Shrubland
+        30: (64, 128, 0),      # Grassland
+        40: (224, 224, 0),     # Cropland
+        50: (224, 0, 0),       # Built-up
+        60: (255, 170, 127),   # Bare / Sparse vegetation
+        70: (255, 255, 255),   # Snow and Ice
+        80: (0, 128, 255),     # Permanent water bodies
+        90: (0, 255, 255),     # Herbaceous Wetland
+        95: (0, 153, 153),     # Mangrove
+        100: (191, 191, 191),  # Moss & Lichen
+    }
+    worldcover_labels = {
+        10: "Tree cover",
+        20: "Shrubland",
+        30: "Grassland",
+        40: "Cropland",
+        50: "Built-up",
+        60: "Bare / Sparse vegetation",
+        70: "Snow and Ice",
+        80: "Permanent water bodies",
+        90: "Herbaceous Wetland",
+        95: "Mangrove",
+        100: "Moss & Lichen"
+    }
+
+    # Plot each land cover column as a stacked bar with the corresponding color
     for land_cover in land_cover_columns:
         values = df_subset[land_cover].values
-        ax.bar(indices, values, label=land_cover.replace("Percentage_", "").replace("_", " "), bottom=bottom_values)
-        bottom_values += values  # This now performs element-wise addition
+        key = land_cover_mapping[land_cover]
+        # Convert the RGB tuple (0-255) to normalized RGB (0-1)
+        color_norm = tuple(c / 255 for c in worldcover_color_map[key])
+        label = worldcover_labels.get(key, land_cover.replace("Percentage_", "").replace("_", " "))
+        ax.bar(indices, values, label=label, color=color_norm, bottom=bottom_values)
+        bottom_values += values  # Update the bottom values for stacking
 
     ax.set_xticks(indices)
     ax.set_xticklabels(df_subset["Name"], rotation=45, ha="right")
     ax.set_ylabel("Porcentaje de Cobertura del Suelo")
-    ax.set_title(f"Cobertura del Suelo para {park_name} ")
+    ax.set_title(f"Cobertura del Suelo para {park_name}")
     ax.legend(title="Tipo de Cobertura", bbox_to_anchor=(1.05, 1), loc="upper left")
 
     plt.tight_layout()
@@ -94,6 +144,7 @@ def plot():
     plt.close(fig)
 
     return Response(img.getvalue(), mimetype="image/png")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
