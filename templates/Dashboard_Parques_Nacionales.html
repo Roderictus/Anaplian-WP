@@ -97,7 +97,7 @@
             <!-- Left Column: Coverage Table and Park Image -->
             <div class="col-md-6">
               <!-- Coverage Table -->
-              <div class="table-responsive mb-3">
+              <div id="coverageTable" class="table-responsive mb-3">
                 <table class="table table-bordered">
                   <thead>
                     <tr>
@@ -141,29 +141,35 @@
 <script>
     document.getElementById("chartForm").addEventListener("submit", function(event) {
         event.preventDefault();
-        const selectedPark = document.getElementById("parkSelect").value;
-        const url = "{{ url_for('national_parks') }}?park=" + encodeURIComponent(selectedPark);
-
-        fetch(url)
+        var selectedPark = document.getElementById("parkSelect").value;
+        var nationalParksUrl = "{{ url_for('national_parks') }}?park=" + encodeURIComponent(selectedPark);
+        
+        // Update chart image right away
+        document.getElementById("chartImage").src = "/plot?park=" + encodeURIComponent(selectedPark);
+        
+        // Fetch updated coverage data and park image from the /national-parks endpoint
+        fetch(nationalParksUrl)
             .then(response => response.text())
             .then(html => {
-                // Crea un contenedor temporal para parsear la respuesta HTML
-                const tempDiv = document.createElement("div");
+                var tempDiv = document.createElement("div");
                 tempDiv.innerHTML = html;
-
-                // Extrae el nuevo bloque de imagen (suponiendo que esté dentro de un contenedor identificable)
-                const newImage = tempDiv.querySelector("#leftParkImage");
-                const newPlaceholder = tempDiv.querySelector("#leftParkPlaceholder");
-
-                if(newImage) {
-                    // Actualizamos el src de la imagen en la columna izquierda
+                
+                // Update left park image
+                var newImage = tempDiv.querySelector("#leftParkImage");
+                var newPlaceholder = tempDiv.querySelector("#leftParkPlaceholder");
+                if (newImage) {
                     document.getElementById("leftParkImage").src = newImage.src;
-                } else if(newPlaceholder) {
-                    // Si no se encontró imagen, actualizamos el mensaje de placeholder
+                } else if (newPlaceholder) {
                     document.getElementById("leftParkImage").outerHTML = newPlaceholder.outerHTML;
                 }
+                
+                // Update the coverage table
+                var newCoverageTable = tempDiv.querySelector("#coverageTable");
+                if (newCoverageTable) {
+                    document.getElementById("coverageTable").innerHTML = newCoverageTable.innerHTML;
+                }
             })
-            .catch(err => console.error("Error actualizando la imagen:", err));
+            .catch(err => console.error("Error updating the page:", err));
     });
 </script>
 

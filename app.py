@@ -59,12 +59,28 @@ def national_parks():
             print("Found image filename:", image_filename)
             break
 
+    # Completar el diccionario con las coberturas para cada categoría
+    coverage_data = {
+        "Tree cover": df[df["Name"] == selected_park]["Percentage_Tree_Cover"].iloc[0],
+        "Shrubland": df[df["Name"] == selected_park]["Percentage_Shrubland"].iloc[0],
+        "Grassland": df[df["Name"] == selected_park]["Percentage_Grassland"].iloc[0],
+        "Cropland": df[df["Name"] == selected_park]["Percentage_Cropland"].iloc[0],
+        "Built-up": df[df["Name"] == selected_park]["Percentage_Built-up"].iloc[0],
+        "Bare / Sparse vegetation": df[df["Name"] == selected_park]["Percentage_Bare_Sparse_Vegetation"].iloc[0],
+        "Snow and Ice": df[df["Name"] == selected_park]["Percentage_Snow_and_Ice"].iloc[0],
+        "Permanent water bodies": df[df["Name"] == selected_park]["Percentage_Permanent_Water_body"].iloc[0],
+        "Herbaceous Wetland": df[df["Name"] == selected_park]["Percentage_Herbaceous_Wetland"].iloc[0],
+        "Mangrove": df[df["Name"] == selected_park]["Percentage_Mangrove"].iloc[0],
+        "Moss & Lichen": df[df["Name"] == selected_park]["Percentage_Moss_and_Lichen"].iloc[0],
+    }
+
     return render_template("Dashboard_Parques_Nacionales.html", 
                            parks=df["Name"].tolist(), 
                            selected_park=selected_park,
-                           image_filename=image_filename)
+                           image_filename=image_filename,
+                           coverage_data=coverage_data)
 
-@app.route("/plot")
+
 @app.route("/plot")
 def plot():
     park_name = request.args.get("park", df["Name"].iloc[0])
