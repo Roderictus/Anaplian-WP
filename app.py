@@ -16,16 +16,6 @@ def sanitize_name(name):
     """
     return re.sub(r'[^A-Za-z0-9]+', '_', name)
 
-# def sanitize_name(name):
-#     # Normalize Unicode to ASCII (removes accents)
-#     nfkd_form = unicodedata.normalize('NFKD', name)
-#     ascii_str = nfkd_form.encode('ASCII', 'ignore').decode('utf-8')
-#     ascii_str = ascii_str.lower()  # Convert to lowercase
-#     # Replace all spaces with dashes
-#     sanitized = re.sub(r'\s+', '-', ascii_str)
-#     # Remove any characters except lowercase letters, digits, and dashes
-#     sanitized = re.sub(r'[^a-z0-9\-]', '', sanitized)
-#     return sanitized
 
 app = Flask(__name__)
 
@@ -189,7 +179,7 @@ def plot():
     for land_cover in land_cover_columns:
         values = df_subset[land_cover].values
         key = land_cover_mapping[land_cover]
-        # Convert the RGB tuple (0-255) to normalized RGB (0-1)
+        
         color_norm = tuple(c / 255 for c in worldcover_color_map[key])
         label = worldcover_labels.get(key, land_cover.replace("Percentage_", "").replace("_", " "))
         ax.bar(indices, values, label=label, color=color_norm, bottom=bottom_values)
@@ -199,8 +189,7 @@ def plot():
     ax.set_xticklabels(df_subset["Name"], rotation=45, ha="right")
     ax.set_ylabel("Porcentaje de Cobertura del Suelo")
     ax.set_title(f" {park_name} Cobertura del Suelo")
-    ax.legend(title="Tipo de Cobertura", bbox_to_anchor=(1.05, 1), loc="upper left")
-
+    ax.legend(title="Tipo de Cobertura", bbox_to_anchor=(1.05, 1), loc="best")
     plt.tight_layout()
 
     img = io.BytesIO()
