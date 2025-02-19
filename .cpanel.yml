@@ -1,4 +1,10 @@
-version: 2
-deploy:
+---
+deployment:
   tasks:
-    - /usr/local/bin/pip install -r requirements.txt
+    - export DEPLOYPATH=/home/anaphwto/repositories/Anaplian-WP
+    - /bin/cp index.html $DEPLOYPATH
+    - /bin/cp styles.css $DEPLOYPATH
+    - /bin/cp styles.css-.color-bar $DEPLOYPATH
+    - /bin/cp styles.css-.color-bar.color-segment $DEPLOYPATH
+
+    
