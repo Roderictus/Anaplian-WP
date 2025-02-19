@@ -35,23 +35,23 @@
                 <ul class="navbar-nav">
                     <!-- Existing navigation links -->
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index') }}#hero">Home</a>
+                        <a class="nav-link" href="/index.html#hero">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index') }}#who-we-are">Who We Are</a>
+                        <a class="nav-link" href="/index.html#who-we-are">Who We Are</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index') }}#our-approach">Our Approach</a>
+                        <a class="nav-link" href="/index.html#our-approach">Our Approach</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index') }}#case-studies">Case Studies</a>
+                        <a class="nav-link" href="/index.html#case-studies">Case Studies</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index') }}#contact">Contact</a>
+                        <a class="nav-link" href="/index.html#contact">Contact</a>
                     </li>
                     <!-- Active National Parks link -->
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="national-parks.html">Parques Nacionales</a>
+                        <a class="nav-link active" aria-current="page" href="/national-parks.html">Parques Nacionales</a>
                     </li>
                 </ul>
             </div>
@@ -59,9 +59,12 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="hero" class="d-flex align-items-center" style="height: 60vh; position: relative; background: url('{{ url_for("static", filename="All_ANP_Mexico/Lagunas_de_Chacahua_V4_5.png") }}') center center / cover no-repeat;">
-        <!-- Optional overlay for better readability -->
-        <div class="overlay" style="background: rgba(0, 0, 0, 0.4); position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
+    <section id="hero" class="d-flex align-items-center" style="height: 60vh; position: relative;">
+        <!-- Video Background -->
+
+        
+        <!-- Overlay for Darkening the Video (Optional) -->
+        <div class="overlay" style="background: rgba(0, 0, 0, 0.5); position: absolute; top:0; left:0; width:100%; height:100%;"></div>
         
         <!-- Hero Content -->
         <div class="container text-center text-white position-relative" style="z-index: 2;">
