@@ -1,10 +1,14 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/anaphwto/repositories/Anaplian-WP
-    - /bin/cp index.html $DEPLOYPATH
-    - /bin/cp styles.css $DEPLOYPATH
-    - /bin/cp styles.css-.color-bar $DEPLOYPATH
-    - /bin/cp styles.css-.color-bar.color-segment $DEPLOYPATH
+    # Create a virtual environment named "venv"
+    - python3 -m venv venv
+    
+    # Upgrade pip and install dependencies from requirements.txt
+    - venv/bin/pip install --upgrade pip
+    - venv/bin/pip install -r requirements.txt
+    
+    # Touch the WSGI file to trigger Passenger to reload your app (ensure this file imports your app)
+    - touch passenger_wsgi.py
 
     
