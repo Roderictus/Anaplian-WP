@@ -42,16 +42,10 @@
                         <a class="nav-link" href="#who-we-are">Who We Are</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#our-approach">Our Approach</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#case-studies">Case Studies</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="#contact">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="national-parks.html">National Parks</a>
+                        <a class="nav-link" href="{{ url_for('national_parks') }}">National Parks</a>
                     </li>
                 </ul>
             </div>
@@ -78,7 +72,7 @@
             <p class="lead">
                 Independent comparable automated data for Natural Protected Areas Surveillance and Monitoring.
                         </p>
-            <a href="templates\Dashboard_Parques_Nacionales.html" class="btn btn-orange btn-lg mt-3">Learn More About National Parks</a>
+            <a href="{{ url_for('national_parks') }}" class="btn btn-orange btn-lg mt-3">Learn More About National Parks</a>
         </div>
     </section>
 
@@ -88,34 +82,40 @@
         <div class="container text-center">
             <h2 class="text-center">Blog</h2>
             <p class="text-center">Stay updated with our latest insights and developments in applied research and socio-economic solutions.</p>
+            
             <div class="row mt-4">
-                            <!-- Blog Post 2 -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card h-100">
-                                    <img src="{{ url_for('static', filename='images/Blog/La_Monta_a_Malinche_o_Matlalcu_yatl_V1_0.png') }}" class="card-img-top" alt="Blog Post 1">
-                                        <div class="card-body d-flex flex-column">
-                                            <h5 class="card-title">Parques Nacionales ¿Que tan protegidas están nuestras Áreas Naturales Protegidas?</h5>
-                                            <p class="card-text">Motivados por nuestra pasión por el senderismo y alertados por el deterioro visible de algunas rutas, varios integrantes del equipo de Anaplian, junto con México en Datos, decidimos realizar un diagnóstico de las Áreas Naturales Protegidas ante la falta de datos oficiales. </p>
-                                            <a href="blog-post-2.html" class="btn btn-primary mt-auto">Ir a la entrada del blog</a>
-                                        </div>
-                                </div>
-                            </div>
                 <!-- Blog Post 1 -->
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
-                        <img src="{{ url_for('static', filename='images/blog/Vista_del_Dashboard.png') }}" class="card-img-top" alt="Blog Post 1">
+                        <img src="{{ url_for('static', filename='images/Blog/La_Monta_a_Malinche_o_Matlalcu_yatl_V1_0.png') }}" class="card-img-top" alt="Blog Post 1">
                         <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Developments in the Automated Dashboard for Monitoring National Parks</h5>
-                            <p class="card-text">Anaplian begins the year 2025 with progress on one of our favorite public projects: the development of an automated dashboard for monitoring National Parks.</p>
-                            <a href="blog-post-1.html" class="btn btn-primary mt-auto">Read More</a>
+                            <h5 class="card-title">Parques Nacionales ¿Que tan protegidas están nuestras Áreas Naturales Protegidas?</h5>
+                            <p class="card-text">Motivados por nuestra pasión por el senderismo y alertados por el deterioro visible de algunas rutas, varios integrantes del equipo de Anaplian, junto con México en Datos, decidimos realizar un diagnóstico de las Áreas Naturales Protegidas ante la falta de datos oficiales.</p>
+                            <a href="{{ url_for('static', filename='blog-post-2.html') }}" class="btn btn-primary mt-auto">Ir a la entrada del blog</a>
                         </div>
                     </div>
                 </div>
-
-
+                
+                <!-- Blog Post 2 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="{{ url_for('static', filename='images/blog/Vista_del_Dashboard.png') }}" class="card-img-top" alt="Blog Post 2">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Developments in the Automated Dashboard for Monitoring National Parks</h5>
+                            <p class="card-text">Anaplian begins the year 2025 with progress on one of our favorite public projects: the development of an automated dashboard for monitoring National Parks.</p>
+                            <a href="{{ url_for('static', filename='blog-post-1.html') }}" class="btn btn-primary mt-auto">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- You can add a third blog post here to fill the row -->
+                <div class="col-md-4 mb-4">
+                    <!-- Third blog post content -->
+                </div>
             </div>
-            <div class="text-center">
-                <a href="blog.html" class="btn btn-secondary">View All Blog Posts</a>
+            
+            <div class="text-center mt-4">
+                <a href="{{ url_for('static', filename='blog.html') }}" class="btn btn-secondary">View All Blog Posts</a>
             </div>
         </div>
     </section>
@@ -173,75 +173,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Our Approach Section -->
-    <section id="our-approach" class="mt-5">
-        <div class="container">
-            <h2 class="text-center">Applied Research and Statistical Programming for Socio-Economic Solutions</h2>
-            <p>
-                Our consulting firm specializes in applied and reproducible research within socio-economic domains. Utilizing statistical programming languages like Python and R, we address complex problems with state-of-the-art methodologies.
-            </p>
-            <p>
-                The surge in data availability and computational power has revolutionized socio-economic research. We focus on applying advanced statistical methods and machine learning algorithms to extract actionable insights from data. The isomorphic nature of statistical techniques across scientific disciplines allows us to adapt methods from various fields to socio-economic contexts.
-            </p>
-            <h3>Methodology</h3>
-            <ol>
-                <li><strong>Problem Analysis:</strong> We begin by thoroughly understanding the client's specific challenges and objectives.</li>
-                <li><strong>Data Handling:</strong> Assessing available data or generating new datasets. We employ best practices in data tidying to prepare data for analysis.</li>
-                <li><strong>Application of Available Research:</strong> Utilizing current research and methodologies, we apply appropriate statistical and machine learning models.</li>
-                <li><strong>Solution Delivery:</strong> Presenting results through detailed reports, interactive tools, or custom applications, optimized for clarity and usability.</li>
-                <li><strong>Iteration and Refinement:</strong> Collaborating with clients to refine solutions based on feedback and evolving requirements.</li>
-            </ol>
-            <h3>Technical Expertise</h3>
-            <ul>
-                <li><strong>Statistical Programming:</strong> Proficient in Python and R libraries, ability to interact and apply new methodologies for new problems or cross discipline development.</li>
-                <li><strong>Machine Learning:</strong> Implementation of algorithms for regression, classification, clustering, and dimensionality reduction.</li>
-                <li><strong>Data Visualization:</strong> Creating insightful visualizations using tools like Matplotlib, Seaborn, and Plotly.</li>
-                <li><strong>Geospatial Analysis:</strong> Processing and analyzing satellite and LiDAR data for spatial insights.</li>
-                <li><strong>Time Series Analysis:</strong> Modeling and forecasting temporal data patterns.</li>
-                <li><strong>Econometrics:</strong> Applying statistical methods to economic data for hypothesis testing and forecasting.</li>
-                <li><strong>Genomics.</strong></li>
-                <li><strong>Climate change and resilience.</strong></li>
-            </ul>
-
-
-
-            
-        </div>
-    </section>
-
-   
-    <!-- Case Studies Section -->
-    <section id="case-studies" class="mt-5">
-        <div class="container">
-            <h2 class="text-center">Public Projects</h2>
-            <div class="row mt-4">
-                <!-- Case Study 1 -->
-                <div class="col-md-6 mb-4">
-                    <div class="card h-100">
-                        <img src="{{ url_for('static', filename='GiFs/El_Tepozteco_True_Color_NV3_35.gif') }}" class="card-img-top medium-gif" alt="El Tepozteco RGB" style="max-width: auto; height: auto;">
-                        <div class="card-body">
-                            <h5 class="card-title">NPA Surveillance and Monitoring</h5>
-                            <p class="card-text">Developing a framework leveraging satellite data and deep learning for NPA monitoring.</p>
-                            <a href="case-study-npa.html" class="btn btn-primary">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Case Study 2 -->
-                <div class="col-md-6 mb-4">
-                    <div class="card h-100">
-                        <img src="{{ url_for('static', filename='GiFs/Playa del Carmen 1984-2024.gif') }}" class="card-img-top medium-gif" alt="Geospatial Data and Monitoring">
-                        <div class="card-body">
-                            <h5 class="card-title">Geospatial Data and Monitoring</h5>
-                            <p class="card-text">Implementing advanced geospatial analytics to enhance environmental monitoring and decision-making.</p>
-                            <a href="case-study-geospatial.html" class="btn btn-primary">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Add more case studies here if needed -->
             </div>
         </div>
     </section>

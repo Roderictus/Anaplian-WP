@@ -41,12 +41,6 @@
                         <a class="nav-link" href="{{ url_for('index') }}#who-we-are">Who We Are</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index') }}#our-approach">Our Approach</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index') }}#case-studies">Case Studies</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('index') }}#contact">Contact</a>
                     </li>
                     <!-- Active National Parks link -->
@@ -60,12 +54,8 @@
 
     <!-- Hero Section -->
     <section id="hero" class="d-flex align-items-center" style="height: 60vh; position: relative;">
-        <!-- Video Background -->
-
-        
-        <!-- Overlay for Darkening the Video (Optional) -->
         <div class="overlay" style="background: rgba(0, 0, 0, 0.5); position: absolute; top:0; left:0; width:100%; height:100%;"></div>
-        
+    
         <!-- Hero Content -->
         <div class="container text-center text-white position-relative" style="z-index: 2;">
             <h1 class="text-white">Desarrollo de Soluciones para el Seguimiento y Protección de Parques Nacionales y Áreas Naturales Protegidas</h1>
@@ -123,7 +113,7 @@
                     <tr>
                       <td>{{ cover }}</td>
                       <td>{{ data.percentage }}</td>
-                      <td>{{ data.area | round(2) }}</td>
+                      <td>{{ data.area | round(0) }}</td>
                       <td>
                         <!-- Only the swatch is displayed -->
                         <div style="width: 30px; height: 20px; background-color: {{ data.color }}; border: 1px solid #000;"></div>
