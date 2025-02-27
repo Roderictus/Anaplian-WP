@@ -31,6 +31,12 @@ land_cover_columns = [
     "Percentage_Mangrove", "Percentage_Moss_and_Lichen"
 ]
 
+@app.route('/')
+def index():
+    # Renders your main landing page
+    return render_template('index.html')
+
+
 @app.route("/national-parks", methods=["GET", "POST"])
 def national_parks():
     selected_park = request.args.get("park", df["Name"].iloc[0])

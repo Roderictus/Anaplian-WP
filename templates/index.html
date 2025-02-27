@@ -19,8 +19,9 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -62,7 +63,7 @@
     <!-- Hero Section -->
     <section id="hero" class="d-flex align-items-center" style="height: 80vh;">
         <div class="container text-center position-relative" style="z-index: 2;">
-            <img src="Images/anaplian-logo.png" alt="Anaplian Logo" class="img-fluid mb-2" style="max-width: 300px; height: auto;">
+            <img src="{{ url_for('static', filename='images/anaplian-logo.png') }}" alt="Anaplian Logo" class="img-fluid mb-2" style="max-width: 300px; height: auto;">
             <h1 class="text-white">Welcome to Anaplian</h1>
             <p class="lead text-white">Applying state of the art research in geospatial and socio-economic fields to your company needs.</p>
             <a href="#who-we-are" class="btn btn-primary mt-3">Learn More</a>
@@ -91,7 +92,7 @@
                             <!-- Blog Post 2 -->
                             <div class="col-md-4 mb-4">
                                 <div class="card h-100">
-                                    <img src="Images\Blog\La_Monta_a_Malinche_o_Matlalcu_yatl_V1_0.png" class="card-img-top" alt="Blog Post 1">
+                                    <img src="{{ url_for('static', filename='images/Blog/La_Monta_a_Malinche_o_Matlalcu_yatl_V1_0.png') }}" class="card-img-top" alt="Blog Post 1">
                                         <div class="card-body d-flex flex-column">
                                             <h5 class="card-title">Parques Nacionales ¿Que tan protegidas están nuestras Áreas Naturales Protegidas?</h5>
                                             <p class="card-text">Motivados por nuestra pasión por el senderismo y alertados por el deterioro visible de algunas rutas, varios integrantes del equipo de Anaplian, junto con México en Datos, decidimos realizar un diagnóstico de las Áreas Naturales Protegidas ante la falta de datos oficiales. </p>
@@ -102,7 +103,7 @@
                 <!-- Blog Post 1 -->
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
-                        <img src="Images/blog/Vista_del_Dashboard.png" class="card-img-top" alt="Blog Post 1">
+                        <img src="{{ url_for('static', filename='images/blog/Vista_del_Dashboard.png') }}" class="card-img-top" alt="Blog Post 1">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Developments in the Automated Dashboard for Monitoring National Parks</h5>
                             <p class="card-text">Anaplian begins the year 2025 with progress on one of our favorite public projects: the development of an automated dashboard for monitoring National Parks.</p>
@@ -127,7 +128,7 @@
                 <!-- Team Member 1 -->
                 <div class="col-md-6 col-lg-3 mb-4">
                     <div class="card h-100 text-center">
-                        <img src="Images/team/RFF cuadrada.jpg" class="card-img-top rounded-circle mx-auto mt-3" alt="Rodrigo Franco" style="width: 100px; height: 100px;">
+                        <img src="{{ url_for('static', filename='images/team/RFF cuadrada.jpg') }}" class="card-img-top rounded-circle mx-auto mt-3" class="card-img-top rounded-circle mx-auto mt-3" alt="Rodrigo Franco" style="width: 100px; height: 100px;">
                         <div class="card-body">
                             <h5 class="card-title">Rodrigo Franco</h5>
                             <p class="card-text">With 20 years of experience in data science, economics, and consulting, I created Anaplian to bring practical, data-driven insights to businesses. </p>
@@ -139,7 +140,7 @@
                 <!-- Team Member 2 -->
                 <div class="col-md-6 col-lg-3 mb-4">
                     <div class="card h-100 text-center">
-                        <img src="Images/team/EFV cuadrada baja.jpg" class="card-img-top rounded-circle mx-auto mt-3" alt="Edgar Franco" style="width: 100px; height: 100px;">
+                        <img src="{{ url_for('static', filename='images/team/EFV cuadrada baja.jpg') }}" class="card-img-top rounded-circle mx-auto mt-3" alt="Edgar Franco" style="width: 100px; height: 100px;">
                         <div class="card-body">
                             <h5 class="card-title">Edgar Franco</h5>
                             <p class="card-text">I am an Assistant Professor in the Department of Political Science at the University of Michigan. My research interests include Latin American politics, historical political economy, criminal violence, and indigenous politics. My work received the 2021 Heinz I. Eulau Award for the best article published in the APSR, and the 2022 Mary Parker Follett award for the best article on politics and history.  </p>
@@ -151,7 +152,7 @@
                 <!-- Team Member 3 -->
                 <div class="col-md-6 col-lg-3 mb-4">
                     <div class="card h-100 text-center">
-                        <img src="Images/team/JMS.jpg" class="card-img-top rounded-circle mx-auto mt-3" alt="Juan Mata" style="width: 100px; height: 100px;">
+                        <img src="{{ url_for('static', filename='images/team/JMS.jpg') }}" class="card-img-top rounded-circle mx-auto mt-3" alt="Juan Mata" style="width: 100px; height: 100px;">
                         <div class="card-body">
                             <h5 class="card-title">Juan Mata</h5>
                             <p class="card-text">Juan is an energy and environment specialist with years of expertise in policy, program and project development. He has worked with numerous public and private entities, as well as multilateral organizations. Juan has provided consultancy services to governments and international organizations across Latin America. He currently serves as an associate consultant for the World Bank's Carbon Market Unit.</p>
@@ -162,7 +163,7 @@
                 <!-- Team Member 4 -->
                 <div class="col-md-6 col-lg-3 mb-4">
                     <div class="card h-100 text-center">
-                        <img src="Images/team/NAM cuadrada.jpg" class="card-img-top rounded-circle mx-auto mt-3" alt="Nicolas Alcaraz" style="width: 100px; height: 100px;">
+                        <img src="{{ url_for('static', filename='images/team/NAM cuadrada.jpg') }}" class="card-img-top rounded-circle mx-auto mt-3" alt="Nicolas Alcaraz" style="width: 100px; height: 100px;">
                         <div class="card-body">
                             <h5 class="card-title">Nicolas Alcaraz</h5>
                             <p class="card-text">As a bioinformatician and computational biologist with extensive expertise in AI, algorithms, machine learning, and data science, I specialize in delivering innovative, data-driven solutions for the biomedical field. With a proven track record across genomics, epigenomics, transcriptomics, and clinical data analysis, I design and implement advanced computational pipelines that provide clients with clear, impactful insights to accelerate research and development.</p>
@@ -221,7 +222,7 @@
                 <!-- Case Study 1 -->
                 <div class="col-md-6 mb-4">
                     <div class="card h-100">
-                        <img src="GiFs/El_Tepozteco_True_Color_NV3_35.gif" class="card-img-top medium-gif" alt="El Tepozteco RGB" style="max-width: auto; height: auto;">
+                        <img src="{{ url_for('static', filename='GiFs/El_Tepozteco_True_Color_NV3_35.gif') }}" class="card-img-top medium-gif" alt="El Tepozteco RGB" style="max-width: auto; height: auto;">
                         <div class="card-body">
                             <h5 class="card-title">NPA Surveillance and Monitoring</h5>
                             <p class="card-text">Developing a framework leveraging satellite data and deep learning for NPA monitoring.</p>
@@ -232,7 +233,7 @@
                 <!-- Case Study 2 -->
                 <div class="col-md-6 mb-4">
                     <div class="card h-100">
-                        <img src="GiFs\Playa del Carmen 1984-2024.gif" class="card-img-top medium-gif" alt="Geospatial Data and Monitoring">
+                        <img src="{{ url_for('static', filename='GiFs/Playa del Carmen 1984-2024.gif') }}" class="card-img-top medium-gif" alt="Geospatial Data and Monitoring">
                         <div class="card-body">
                             <h5 class="card-title">Geospatial Data and Monitoring</h5>
                             <p class="card-text">Implementing advanced geospatial analytics to enhance environmental monitoring and decision-making.</p>
