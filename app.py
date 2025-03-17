@@ -11,7 +11,7 @@ import unicodedata
 
 # Funciones externas
 # Load data
-file_path = "Parques_Nacionales.csv"  
+file_path = "Parques_Nacionales_func.csv"
 df = pd.read_csv(file_path)
 
 # Define land cover categories
@@ -99,7 +99,7 @@ def national_parks():
         100: (191, 191, 191),  # Moss & Lichen
     }
 
-    total_area_ha = park_row["Geometry Area (ha)"]
+    total_area_ha = park_row["GIS_AREA"]
 
     land_cover_data = {}
     for col in land_cover_columns:

@@ -25,7 +25,7 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="index.html">Anaplian</a>
+            <a class="navbar-brand" href="{{ url_for('index') }}#hero">Anaplian</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -66,148 +66,66 @@
 
     <section id="dashboard" class="mt-5">
         <div class="container">
-          <!-- Title, Description and Dropdown -->
-          <div class="row">
-            <div class="col-12 text-center">
-              <h2 class="mb-4">Cobertura del Suelo en Parques Nacionales</h2>
-              <p>
-                Selecciona un parque nacional para ver su imagen, la tabla de datos y la gráfica correspondiente.
-              </p>
-              <form id="chartForm" method="GET" action="{{ url_for('national_parks') }}">
-                <select id="parkSelect" name="park" class="form-select d-inline-block w-auto">
-                  {% for park in parks %}
-                    <option value="{{ park }}" {% if park == selected_park %}selected{% endif %}>{{ park }}</option>
-                  {% endfor %}
-                </select>
-                <button type="submit" class="btn btn-primary mt-3">Generar Gráfico</button>
-              </form>
+            <!-- Title, Description and Dropdown -->
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="mb-4">Cobertura del Suelo en Parques Nacionales</h2>
+                    <p>
+                        Selecciona un parque nacional para ver su imagen y datos de cobertura.
+                    </p>
+                    <form id="chartForm" method="GET" action="{{ url_for('national_parks') }}">
+                        <select id="parkSelect" name="park" class="form-select d-inline-block w-auto">
+                            {% for park in parks %}
+                                <option value="{{ park }}" {% if park == selected_park %}selected{% endif %}>{{ park }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-primary mt-3">Ver Información</button>
+                    </form>
+                </div>
             </div>
-          </div>
-      
-          <!-- Park Image Section with Fixed Medium-Large Size -->
-          <div class="row mt-4">
-            <div class="col-12 d-flex align-items-center justify-content-center">
-              {% if image_filename %}
-                <img id="leftParkImage" src="{{ url_for('static', filename='images/' ~ image_filename) }}" alt="{{ selected_park }}" class="img-fluid" style="width:600px; height:auto;">
-              {% else %}
-                <p id="leftParkPlaceholder">No image available for {{ selected_park }}.</p>
-              {% endif %}
+
+            <!-- Main Content Area -->
+            <div class="row mt-4">
+                <!-- Left side - Park Image -->
+                <div class="col-lg-6 mb-4">
+                    {% if image_filename %}
+                        <img id="leftParkImage" src="{{ url_for('static', filename='images/' ~ image_filename) }}" 
+                             alt="{{ selected_park }}" class="img-fluid rounded">
+                    {% else %}
+                        <p id="leftParkPlaceholder">No image available for {{ selected_park }}.</p>
+                    {% endif %}
+                </div>
+
+                <!-- Right side - Coverage Table -->
+                <div class="col-lg-6 mb-4">
+                    <div id="coverageTable" class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Tipo de Cobertura</th>
+                                    <th>Porcentaje (%)</th>
+                                    <th>Área (ha)</th>
+                                    <th>Color</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cover, data in land_cover_data.items() %}
+                                <tr>
+                                    <td>{{ cover }}</td>
+                                    <td>{{ data.percentage }}</td>
+                                    <td>{{ data.area | round(0) }}</td>
+                                    <td>
+                                        <div style="width: 30px; height: 20px; background-color: {{ data.color }}; border: 1px solid #000;"></div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-          </div>
-      
-          <!-- Coverage Table Section with Color Swatch Only -->
-          <div class="row mt-4">
-            <div class="col-12 d-flex align-items-center justify-content-center">
-              <div id="coverageTable" class="table-responsive mb-3">
-                <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th>Tipo de Cobertura</th>
-                      <th>Porcentaje (%)</th>
-                      <th>Área (ha)</th>
-                      <th>Color</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for cover, data in land_cover_data.items() %}
-                    <tr>
-                      <td>{{ cover }}</td>
-                      <td>{{ data.percentage }}</td>
-                      <td>{{ data.area | round(0) }}</td>
-                      <td>
-                        <!-- Only the swatch is displayed -->
-                        <div style="width: 30px; height: 20px; background-color: {{ data.color }}; border: 1px solid #000;"></div>
-                      </td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-      
-          <!-- Chart Graph Section -->
-          <div class="row mt-4">
-            <div class="col-12 d-flex align-items-center justify-content-center">
-              <img id="chartImage" src="{{ url_for('plot', park=selected_park if selected_park else parks[0]) }}" alt="Land Cover Chart" class="img-fluid">
-            </div>
-          </div>
         </div>
-      </section>
-      
-      
-
-<!-- JavaScript to Handle Dropdown Selection and Chart Update -->
-<script>
-    document.getElementById("chartForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-        console.log("chartForm submit triggered");
-
-        var selectedPark = document.getElementById("parkSelect").value;
-        console.log("Selected park: " + selectedPark);
-
-        // Append a timestamp to avoid cache issues for the national_parks request
-        var nationalParksUrl = "{{ url_for('national_parks') }}" + "?park=" + encodeURIComponent(selectedPark) + "&ts=" + new Date().getTime();
-        console.log("Fetching URL:", nationalParksUrl);
-
-        // Update chart image immediately with a cache-busting query parameter
-        document.getElementById("chartImage").src = "/plot?park=" + encodeURIComponent(selectedPark) + "&ts=" + new Date().getTime();
-
-        // Fetch the updated HTML from /national-parks
-        fetch(nationalParksUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("HTTP error! status: " + response.status);
-                }
-                return response.text();
-            })
-            .then(html => {
-                console.log("Full HTML received via AJAX:", html.substring(0, 200)); // print first 200 chars for debugging
-
-                // Create a temporary container to parse the returned HTML
-                var tempDiv = document.createElement("div");
-                tempDiv.innerHTML = html;
-
-                // Update the coverage table
-                var newCoverageTable = tempDiv.querySelector("#coverageTable");
-                if (newCoverageTable) {
-                    console.log("Updating coverage table");
-                    document.getElementById("coverageTable").innerHTML = newCoverageTable.innerHTML;
-                } else {
-                    console.error("Coverage table not found in fetched HTML");
-                }
-
-                // Update the left park image with cache-busting
-                var newLeftParkImage = tempDiv.querySelector("#leftParkImage");
-                if (newLeftParkImage) {
-                    console.log("Updating left park image");
-
-                    // Construct a cache-busting URL for the new image source
-                    var newSrc = newLeftParkImage.src;
-                    if(newSrc.indexOf('?') === -1) {
-                        newSrc += '?ts=' + new Date().getTime();
-                    } else {
-                        newSrc += '&ts=' + new Date().getTime();
-                    }
-                    
-                    // Replace the old image element entirely with the new one
-                    var updatedImageHTML = newLeftParkImage.outerHTML.replace(newLeftParkImage.src, newSrc);
-                    document.getElementById("leftParkImage").outerHTML = updatedImageHTML;
-                } else {
-                    // Fallback: update placeholder text if no image element exists in the returned HTML
-                    var newPlaceholder = tempDiv.querySelector("#leftParkPlaceholder");
-                    if (newPlaceholder) {
-                        console.log("Updating left park placeholder");
-                        document.getElementById("leftParkImage").outerHTML = newPlaceholder.outerHTML;
-                    } else {
-                        console.error("Neither left park image nor placeholder found in fetched HTML");
-                    }
-                }
-            })
-            .catch(error => console.error("Error updating the page:", error));
-    });
-</script>
-
+    </section>
 
     <!-- Footer -->
     <footer class="bg-dark text-white py-4 mt-5">
@@ -300,20 +218,66 @@
         });
     </script>
 
+    <!-- Modified JavaScript - Removed chart-related code -->
+    <script>
+        document.getElementById("chartForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            console.log("Form submit triggered");
 
+            var selectedPark = document.getElementById("parkSelect").value;
+            console.log("Selected park: " + selectedPark);
 
+            // Append a timestamp to avoid cache issues
+            var nationalParksUrl = "{{ url_for('national_parks') }}" + "?park=" + encodeURIComponent(selectedPark) + "&ts=" + new Date().getTime();
+            console.log("Fetching URL:", nationalParksUrl);
 
-<!-- JavaScript to Handle Dropdown Selection and Chart Update -->
-<script>
-    document.getElementById("chartForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-        var selectedPark = document.getElementById("parkSelect").value;
-        document.getElementById("chartImage").src = "/plot?park=" + encodeURIComponent(selectedPark);
-    });
-</script>
+            // Fetch the updated HTML
+            fetch(nationalParksUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("HTTP error! status: " + response.status);
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    var tempDiv = document.createElement("div");
+                    tempDiv.innerHTML = html;
 
+                    // Update the coverage table
+                    var newCoverageTable = tempDiv.querySelector("#coverageTable");
+                    if (newCoverageTable) {
+                        document.getElementById("coverageTable").innerHTML = newCoverageTable.innerHTML;
+                    }
 
-
-
+                    // Update the park image
+                    var newLeftParkImage = tempDiv.querySelector("#leftParkImage");
+                    if (newLeftParkImage) {
+                        console.log("Found new image, updating...");
+                        var currentImage = document.getElementById("leftParkImage");
+                        if (currentImage) {
+                            // Get the new image source and add cache-busting
+                            var newSrc = "{{ url_for('static', filename='images/') }}" + newLeftParkImage.getAttribute('src').split('/').pop();
+                            newSrc += (newSrc.indexOf('?') === -1 ? '?' : '&') + 'ts=' + new Date().getTime();
+                            currentImage.src = newSrc;
+                            console.log("Updated image source to:", newSrc);
+                        }
+                    } else {
+                        console.log("No new image found in response");
+                        // Handle case where no image is available
+                        var placeholder = tempDiv.querySelector("#leftParkPlaceholder");
+                        if (placeholder) {
+                            var imageContainer = document.getElementById("leftParkImage");
+                            if (imageContainer) {
+                                imageContainer.outerHTML = placeholder.outerHTML;
+                            }
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error("Error updating the page:", error);
+                    alert("Error updating the display. Please try again.");
+                });
+        });
+    </script>
 </body>
 </html>
