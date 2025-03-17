@@ -219,6 +219,14 @@ def blog_post_1():
 def blog():
     return render_template('blog.html')
 
+@app.route('/blog_post_2_en')
+def blog_post_2_en():
+    return render_template('blog_post_2_en.html')
+
+@app.route('/blog_post_2_fr')
+def blog_post_2_fr():
+    return render_template('blog_post_2_fr.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
 
