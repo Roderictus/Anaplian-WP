@@ -1,9 +1,9 @@
-#!/usr/bin/env python
-import sys
+import imp
 import os
+import sys
 
-# Add your app directory to path
+
 sys.path.insert(0, os.path.dirname(__file__))
 
-# Import your Flask app
-from app import app as application 
+wsgi = imp.load_source('wsgi', 'app.py')
+application = wsgi.app

@@ -1,0 +1,13 @@
+2025-02-28 11:52:57,205 - ERROR - Error initializing Flask: No module named 'flask'
+2025-02-28 11:52:57,209 - ERROR - Error initializing Flask: No module named 'flask'
+2025-02-28 11:53:23,678 - ERROR - Error initializing Flask: No module named 'flask'
+2025-02-28 11:53:23,682 - ERROR - Error initializing Flask: No module named 'flask'
+2025-02-28 11:53:28,595 - ERROR - Error initializing Flask: No module named 'flask'
+2025-02-28 11:53:28,599 - ERROR - Error initializing Flask: No module named 'flask'
+2025-02-28 11:56:15,968 - ERROR - Error initializing Flask: No module named 'flask'
+2025-02-28 11:56:40,995 - ERROR - Error initializing Flask: No module named 'flask'
+2025-02-28 11:56:40,999 - ERROR - Error initializing Flask: No module named 'flask'
+2025-02-28 11:57:11,205 - ERROR - Error initializing Flask: No module named 'flask'
+2025-02-28 11:58:58,039 - INFO - Flask initialized successfully
+2025-02-28 11:58:58,064 - ERROR - Error in index route: Could not build url for endpoint 'national_parks'. Did you mean 'static' instead?
+2025-02-28 12:00:20,362 - ERROR - Error in index route: Could not build url for endpoint 'national_parks'. Did you mean 'static' instead?

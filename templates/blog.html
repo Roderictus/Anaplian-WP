@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Anaplian Blog</title>
+    <!-- Responsive Meta Tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Anaplian - Research insights and developments">
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Anaplian Blog">
+    <meta property="og:description" content="Latest insights and developments in applied research and socio-economic solutions">
+    <meta property="og:image" content="{{ url_for('static', filename='images/anaplian-logo.png') }}">
+    <meta property="og:url" content="https://anaplian.com/blog">
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">Anaplian</a>
+            
+            <!-- Language Selector -->
+            <div class="navbar-brand ms-3 dropdown">
+                <button class="btn btn-light dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-globe"></i> Language
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                    <li><a class="dropdown-item" href="{{ url_for('index', lang='en') }}">English</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('index', lang='es') }}">Español</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('index', lang='fr') }}">Français</a></li>
+                </ul>
+            </div>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}#hero">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}#who-we-are">Who We Are</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('national_parks') }}">National Parks</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="d-flex align-items-center" style="height: 40vh;">
+        <div class="container text-center position-relative" style="z-index: 2;">
+            <h1 class="text-white">Blog</h1>
+            <p class="lead text-white">Latest insights and developments in applied research and socio-economic solutions</p>
+        </div>
+        <div class="overlay"></div>
+    </section>
+
+    <!-- Blog Posts Section -->
+    <section class="mt-5">
+        <div class="container">
+            <div class="row">
+                <!-- Blog Post 1 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <img src="{{ url_for('static', filename='images/Blog/La_Monta_a_Malinche_o_Matlalcu_yatl_V1_0.png') }}" class="card-img-top" alt="Blog Post 1">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Parques Nacionales ¿Que tan protegidas están nuestras Áreas Naturales Protegidas?</h5>
+                            <p class="card-text">Motivados por nuestra pasión por el senderismo y alertados por el deterioro visible de algunas rutas, varios integrantes del equipo de Anaplian, junto con México en Datos, decidimos realizar un diagnóstico de las Áreas Naturales Protegidas ante la falta de datos oficiales.</p>
+                            <a href="{{ url_for('blog_post_2') }}" class="btn btn-primary mt-auto">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Blog Post 2 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <img src="{{ url_for('static', filename='images/Blog/Vista_del_Dashboard.png') }}" class="card-img-top" alt="Blog Post 2">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Developments in the Automated Dashboard for Monitoring National Parks</h5>
+                            <p class="card-text">Anaplian begins the year 2025 with progress on one of our favorite public projects: the development of an automated dashboard for monitoring National Parks.</p>
+                            <a href="{{ url_for('blog_post_1') }}" class="btn btn-primary mt-auto">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p>&copy; 2025 Anaplian</p>
+            <div class="social-icons">
+                <a href="#" class="text-white mx-2"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/company/anaplian/about/" class="text-white mx-2"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

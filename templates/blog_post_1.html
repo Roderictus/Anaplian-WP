@@ -50,10 +50,7 @@
                         <a class="nav-link" href="index.html#contact">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="national-parks.html">National Parks</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="blog.html">Blog</a>
+                        <a class="nav-link" href="{{ url_for('national_parks') }}">National Parks</a>
                     </li>
                 </ul>
             </div>
@@ -70,7 +67,7 @@
             
             <div class="mb-4 text-center">
                 <figure class="figure d-inline-block">
-                    <img src="Images/blog/Vista_del_Dashboard.png" class="figure-img img-fluid rounded" alt="Vista del Dashboard">
+                    <img src="{{ url_for('static', filename='images/blog/Vista_del_Dashboard.png') }}" class="figure-img img-fluid rounded" alt="Vista del Dashboard">
                     <figcaption class="figure-caption text-center">Figura 1: Vista del Dashboard.</figcaption>
                 </figure>
             </div>
@@ -80,7 +77,7 @@
             <p>Concebido como una herramienta multipropósito, nos enfocamos 1en el monitoreo de Áreas Naturales Protegidas (ANP) en México. Debido a que existen diferentes designaciones de ANP con variados grados de protección, decidimos concentrarnos en la categoría más restrictiva: Parques Nacionales.</p>
             <div class="mb-4 text-center">
                 <figure class="figure d-inline-block">
-                    <img src="Images/blog/Protected_Planet_Map.png" class="figure-img img-fluid rounded" alt="Mapa de México con Áreas Naturales Protegidas identificadas">
+                    <img src="{{ url_for('static', filename='images/blog/Protected_Planet_Map.png') }}" class="figure-img img-fluid rounded" alt="Mapa de México con Áreas Naturales Protegidas identificadas">
                     <figcaption class="figure-caption text-center">Figura 2: Mapas de México con Áreas Naturales Protegidas identificadas.</figcaption>
                 </figure>
             </div>
@@ -89,7 +86,7 @@
             
             <div class="mb-4 text-center">
                 <figure class="figure d-inline-block">
-                    <img src="Images/blog/ANP_232.jpg" class="figure-img img-fluid rounded" alt="Descripción de la imagen 2">
+                    <img src="{{ url_for('static', filename='images/blog/ANP_232.jpg') }}" class="figure-img img-fluid rounded" alt="Descripción de la imagen 2">
                     <figcaption class="figure-caption text-center">Figura 3: Shapefiles de los Parques Nacionales.</figcaption>
                 </figure>
             </div>
@@ -98,7 +95,7 @@
             
             <div class="mb-4 text-center">
                 <figure class="figure d-inline-block">
-                    <img src="Images/blog/Palenque_Vegetation_Ratio.png" class="figure-img img-fluid rounded" alt="Análisis de vegetación utilizando NDVI">
+                    <img src="{{ url_for('static', filename='images/blog/Palenque_Vegetation_Ratio.png') }}" class="figure-img img-fluid rounded" alt="Análisis de vegetación utilizando NDVI">
                     <figcaption class="figure-caption text-center">Figura 4: Análisis de vegetación utilizando NDVI.</figcaption>
                 </figure>
             </div>
@@ -113,7 +110,7 @@
             <p>Aquí presentamos una vista previa de nuestros resultados iniciales e invitamos a visitar la página periódicamente para actualizaciones.</p>
 
             <!-- Botón para ir a la página de Parques Nacionales -->
-            <a href="national-parks.html" class="btn btn-primary mt-4">
+            <a href="{{ url_for('national_parks') }}" class="btn btn-primary mt-4">
                 <i class="fas fa-tree me-2"></i>Ver Parques Nacionales
             </a>
         </div>

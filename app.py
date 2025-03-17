@@ -9,16 +9,7 @@ import os
 import re
 import unicodedata
 
-
-def sanitize_name(name):
-    """
-    Replace any sequence of non-alphanumeric characters with a single underscore.
-    """
-    return re.sub(r'[^A-Za-z0-9]+', '_', name)
-
-
-app = Flask(__name__)
-
+# Funciones externas
 # Load data
 file_path = "Parques_Nacionales.csv"  
 df = pd.read_csv(file_path)
@@ -31,11 +22,23 @@ land_cover_columns = [
     "Percentage_Mangrove", "Percentage_Moss_and_Lichen"
 ]
 
+def sanitize_name(name):
+    """
+    Replace any sequence of non-alphanumeric characters with a single underscore.
+    """
+    return re.sub(r'[^A-Za-z0-9]+', '_', name)
+
+# Flask y renders
+app = Flask(__name__)
+
 @app.route('/')
 def index():
-    # Renders your main landing page
+    lang = request.args.get('lang', 'en')
+    if lang == 'es':
+        return render_template('index_es.html')
+    elif lang == 'fr':
+        return render_template('index_fr.html')  # You'll need to create this file
     return render_template('index.html')
-
 
 @app.route("/national-parks", methods=["GET", "POST"])
 def national_parks():
@@ -124,8 +127,6 @@ def national_parks():
                            image_filename=image_filename,
                            land_cover_data=land_cover_data)
 
-
-
 @app.route("/plot")
 def plot():
     park_name = request.args.get("park", df["Name"].iloc[0])
@@ -205,6 +206,18 @@ def plot():
 
     return Response(img.getvalue(), mimetype="image/png")
 
+
+@app.route('/blog_post_2')
+def blog_post_2():
+    return render_template('blog_post_2.html')
+
+@app.route('/blog_post_1')
+def blog_post_1():
+    return render_template('blog_post_1.html')
+
+@app.route('/blog')
+def blog():
+    return render_template('blog.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
