@@ -121,11 +121,15 @@ def national_parks():
             "rgb_manual": rgb_string
         }
 
+    # Get the description for the selected park
+    park_description = park_row["Description_y"]
+
     return render_template("Dashboard_Parques_Nacionales.html", 
                            parks=df["Name"].tolist(), 
                            selected_park=selected_park,
                            image_filename=image_filename,
-                           land_cover_data=land_cover_data)
+                           land_cover_data=land_cover_data,
+                           park_description=park_description)
 
 @app.route("/plot")
 def plot():

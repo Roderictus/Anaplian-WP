@@ -123,6 +123,19 @@
                         </table>
                     </div>
                 </div>
+
+                <!-- Description Section - Full Width -->
+                <div class="col-12 mt-4">
+                    <div class="text-center">
+                        <p id="parkDescription" class="lead">
+                            {% if park_description %}
+                                {{ park_description }}
+                            {% else %}
+                                No description available for {{ selected_park }}.
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
