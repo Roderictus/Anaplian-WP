@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Anaplian - Parques Nacionales</title>
+    <title>Anaplian - National Parks</title>
     <!-- Responsive Meta Tag -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Análisis de Parques nacionales">
+    <meta name="description" content="Analysis of National Parks">
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Anaplian - Parques Nacionales">
-    <meta property="og:description" content="Seguimiento de vegetación en parques nacionales">
-    <meta property="og:i|age" content="Images/anaplian-logo.png">
+    <meta property="og:title" content="Anaplian - National Parks">
+    <meta property="og:description" content="Vegetation monitoring in national parks">
+    <meta property="og:image" content="Images/anaplian-logo.png">
     <meta property="og:url" content="https://anaplian.com/national-parks.html">
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -19,16 +19,17 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container">
             <a class="navbar-brand" href="{{ url_for('index') }}#hero">Anaplian</a>
+            <!-- Language Selector -->
             <div class="navbar-brand ms-3 dropdown">
                 <button class="btn btn-light dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-globe"></i> Idioma
+                    <i class="fas fa-globe"></i> Language
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="languageDropdown">
                     <li><a class="dropdown-item" href="{{ url_for('national_parks_en') }}">English</a></li>
@@ -42,7 +43,6 @@
 
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
-                    <!-- Existing navigation links -->
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('index') }}#hero">Home</a>
                     </li>
@@ -52,9 +52,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('index') }}#contact">Contact</a>
                     </li>
-                    <!-- Active National Parks link -->
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/national-parks.html">Parques Nacionales</a>
+                        <a class="nav-link active" aria-current="page" href="#">National Parks</a>
                     </li>
                 </ul>
             </div>
@@ -64,31 +63,28 @@
     <!-- Hero Section -->
     <section id="hero" class="d-flex align-items-center" style="height: 60vh; position: relative;">
         <div class="overlay" style="background: rgba(0, 0, 0, 0.5); position: absolute; top:0; left:0; width:100%; height:100%;"></div>
-    
-        <!-- Hero Content -->
         <div class="container text-center text-white position-relative" style="z-index: 2;">
-            <h1 class="text-white">Desarrollo de Soluciones para el Seguimiento y Protección de Parques Nacionales y Áreas Naturales Protegidas</h1>
-            <p class="lead">Investigación, desarrollo y aplicación de tecnologías de tratamiento de información satelital.</p>
+            <h1 class="text-white">Development of Solutions for Monitoring and Protection of National Parks and Protected Natural Areas</h1>
+            <p class="lead">Research, development and application of satellite information processing technologies.</p>
         </div>
     </section>
-
 
     <section id="dashboard" class="mt-5">
         <div class="container">
             <!-- Title, Description and Dropdown -->
             <div class="row">
                 <div class="col-12 text-center">
-                    <h2 class="mb-4">Cobertura del Suelo en Parques Nacionales</h2>
+                    <h2 class="mb-4">Land Cover in National Parks</h2>
                     <p>
-                        Selecciona un parque nacional para ver su imagen y datos de cobertura.
+                        Select a national park to view its image and coverage data.
                     </p>
-                    <form id="chartForm" method="GET" action="{{ url_for('national_parks') }}" onsubmit="updateParkInfo(event)">
+                    <form id="chartForm" method="GET" action="{{ url_for('national_parks_en') }}" onsubmit="updateParkInfo(event)">
                         <select id="parkSelect" name="park" class="form-select d-inline-block w-auto">
                             {% for park in parks %}
                                 <option value="{{ park }}" {% if park == selected_park %}selected{% endif %}>{{ park }}</option>
                             {% endfor %}
                         </select>
-                        <button type="submit" class="btn btn-primary mt-3">Ver Información</button>
+                        <button type="submit" class="btn btn-primary mt-3">View Information</button>
                     </form>
                 </div>
             </div>
@@ -111,9 +107,9 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Tipo de Cobertura</th>
-                                    <th>Porcentaje (%)</th>
-                                    <th>Área (km²)</th>
+                                    <th>Coverage Type</th>
+                                    <th>Percentage (%)</th>
+                                    <th>Area (km²)</th>
                                     <th>Color</th>
                                 </tr>
                             </thead>
@@ -155,118 +151,35 @@
             <p>&copy; 2025 Anaplian</p>
             <div class="social-icons">
                 <a href="https://www.linkedin.com/company/anaplian/about/" class="text-white mx-2"><i class="fab fa-linkedin"></i></a>
-                <!-- Add more social icons as needed -->
             </div>
         </div>
     </footer>
 
-    <!-- Bootstrap 5 JS Bundle (Includes Popper) -->
+    <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- JavaScript para el Dropdown de Filtrado -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const parkDropdown = document.getElementById('parkDropdown');
-            const videoCards = document.querySelectorAll('.video-card');
-
-            parkDropdown.addEventListener('change', function() {
-                const selectedPark = this.value;
-
-                videoCards.forEach(card => {
-                    if (selectedPark === 'all') {
-                        card.style.display = 'block';
-                    } else {
-                        if (card.getAttribute('data-park') === selectedPark) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    }
-                });
-            });
-        });
-
-        document.getElementById('parkDropdown').addEventListener('change', function() {
-            const selectedPark = this.value;
-            if(selectedPark === 'all') {
-                document.getElementById('video-gallery').style.display = 'block';
-                document.getElementById('park-details').style.display = 'none';
-                document.getElementById('parkContent').innerHTML = '';
-            } else {
-                const videoCards = document.querySelectorAll('.video-card');
-                let selectedCard = null;
-                videoCards.forEach(card => {
-                    if(card.getAttribute('data-park') === selectedPark) {
-                        selectedCard = card;
-                    }
-                });
-                if(selectedCard){
-                    // Obtener el elemento de video
-                    const videoElement = selectedCard.querySelector('video').outerHTML;
-                    
-                    // Obtener el contenido de texto
-                    const textContent = selectedCard.querySelector('.card-body').innerHTML
-                        .replace('<h5 class="card-title">' + selectedPark + '</h5>', '')
-                        .replace('<img src="Images/graphs/parque-nacional-el-tepozteco-graph.jpg" alt="Parque Nacional El Tepozteco Graph" class="img-fluid mt-3">', '')
-                        .replace('<figcaption class="figure-caption text-center">Figure 1: Visitor Statistics and Environmental Impact Analysis.</figcaption>', '');
-                    
-                    // Construir el HTML para la sección de detalles
-                    const detailedContent = `
-                        <div class="text-center mb-4">
-                            <h2>${selectedPark}</h2>
-                        </div>
-                        <div class="mb-4">
-                            ${videoElement}
-                        </div>
-                        <div class="text-off-white">
-                            ${textContent}
-                        </div>
-                    `;
-                    
-                    document.getElementById('parkContent').innerHTML = detailedContent;
-                    document.getElementById('video-gallery').style.display = 'none';
-                    document.getElementById('park-details').style.display = 'block';
-                    // Desplazar a la sección de detalles del parque
-                    document.getElementById('park-details').scrollIntoView({ behavior: 'smooth' });
-                }
-            }
-        });
-
-        document.getElementById('backToGallery').addEventListener('click', function(){
-            document.getElementById('parkDropdown').value = 'all';
-            document.getElementById('video-gallery').style.display = 'block';
-            document.getElementById('park-details').style.display = 'none';
-            document.getElementById('parkContent').innerHTML = '';
-        });
-    </script>
-
-    <!-- Modified JavaScript - Removed chart-related code -->
+    <!-- Update Park Info JavaScript -->
     <script>
         function updateParkInfo(event) {
             event.preventDefault();
             const selectedPark = document.getElementById('parkSelect').value;
             
-            // Make an AJAX request to get the updated data
-            fetch(`{{ url_for('national_parks') }}?park=${encodeURIComponent(selectedPark)}`)
+            fetch(`{{ url_for('national_parks_en') }}?park=${encodeURIComponent(selectedPark)}`)
                 .then(response => response.text())
                 .then(html => {
-                    // Parse the HTML response
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, 'text/html');
                     
-                    // Update the image
                     const newImage = doc.querySelector('#leftParkImage');
                     if (newImage) {
                         document.querySelector('#leftParkImage').src = newImage.src;
                     }
                     
-                    // Update the table
                     const newTable = doc.querySelector('.table');
                     if (newTable) {
                         document.querySelector('.table').outerHTML = newTable.outerHTML;
                     }
                     
-                    // Update the description
                     const newDescription = doc.querySelector('#parkDescription');
                     if (newDescription) {
                         document.querySelector('#parkDescription').innerHTML = newDescription.innerHTML;
@@ -278,4 +191,4 @@
         }
     </script>
 </body>
-</html>
+</html> 
