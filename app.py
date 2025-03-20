@@ -326,6 +326,99 @@ def national_parks_en():
                            land_cover_data=land_cover_data,
                            park_description=park_description)
 
+@app.route("/national-parks-fr", methods=["GET", "POST"])
+def national_parks_fr():
+    # Get the current park selection
+    df = pd.read_csv('static/data/Parques_Nacionales_with_descriptions.csv')
+    selected_park = request.args.get("park", df["Name"].iloc[0])
+    sanitized = sanitize_name(selected_park).lower()
+    sanitized_alt = sanitized.replace('-', '_')
+    image_filename = None
+
+    image_folder = os.path.join(app.root_path, 'static', 'images')
+    for filename in os.listdir(image_folder):
+        lower_filename = filename.lower()
+        if sanitized in lower_filename or sanitized_alt in lower_filename:
+            image_filename = filename
+            break
+
+    if selected_park in df["Name"].values:
+        park_row = df[df["Name"] == selected_park].iloc[0]
+    else:
+        park_row = df.iloc[0]
+
+    land_cover_mapping = {
+        "Percentage_Tree_Cover": 10,
+        "Percentage_Shrubland": 20,
+        "Percentage_Grassland": 30,
+        "Percentage_Cropland": 40,
+        "Percentage_Built-up": 50,
+        "Percentage_Bare_Sparse_Vegetation": 60,
+        "Percentage_Snow_and_Ice": 70,
+        "Percentage_Permanent_Water_body": 80,
+        "Percentage_Herbaceous_Wetland": 90,
+        "Percentage_Mangrove": 95,
+        "Percentage_Moss_and_Lichen": 100,
+    }
+    worldcover_labels = {
+        10: "Tree cover",
+        20: "Shrubland",
+        30: "Grassland",
+        40: "Cropland",
+        50: "Built-up",
+        60: "Bare / Sparse vegetation",
+        70: "Snow and Ice",
+        80: "Permanent water bodies",
+        90: "Herbaceous Wetland",
+        95: "Mangrove",
+        100: "Moss & Lichen"
+    }
+    worldcover_color_map = { 
+        10: (0, 100, 0),       # Tree cover
+        20: (192, 192, 0),     # Shrubland
+        30: (64, 128, 0),      # Grassland
+        40: (224, 224, 0),     # Cropland
+        50: (224, 0, 0),       # Built-up
+        60: (255, 170, 127),   # Bare / Sparse vegetation
+        70: (255, 255, 255),   # Snow and Ice
+        80: (0, 128, 255),     # Permanent water bodies
+        90: (0, 255, 255),     # Herbaceous Wetland
+        95: (0, 153, 153),     # Mangrove
+        100: (191, 191, 191),  # Moss & Lichen
+    }
+
+    total_area_ha = park_row["GIS_AREA"]
+
+    land_cover_data = {}
+    for col in land_cover_columns:
+        key = land_cover_mapping[col]
+        label = worldcover_labels[key]
+        percent = park_row[col]
+        area_ha = (percent / 100) * total_area_ha
+
+        # Compute the hex color for the swatch.
+        color_rgb = worldcover_color_map[key]  # e.g., (0, 100, 0) for Tree cover
+        color_hex = '#{:02x}{:02x}{:02x}'.format(*color_rgb)
+        # Compute the rgb string in the format "rgb(x,x,x)"
+        rgb_string = "rgb({},{},{})".format(*color_rgb)
+
+        land_cover_data[label] = {
+            "percentage": percent,
+            "area": area_ha,
+            "color": color_hex,
+            "rgb_manual": rgb_string
+        }
+
+    # Change to use French description
+    park_description = park_row["Description_fr"]
+
+    return render_template("Dashboard_Parques_Nacionales_fr.html", 
+                           parks=df["Name"].tolist(), 
+                           selected_park=selected_park,
+                           image_filename=image_filename,
+                           land_cover_data=land_cover_data,
+                           park_description=park_description)
+
 if __name__ == "__main__":
     app.run(debug=True)
 

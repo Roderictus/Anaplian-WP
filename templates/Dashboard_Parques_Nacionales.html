@@ -31,8 +31,9 @@
                     <i class="fas fa-globe"></i> Idioma
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-                    <li><a class="dropdown-item" href="{{ url_for('national_parks_en') }}">English</a></li>
-                    <li><a class="dropdown-item" href="{{ url_for('national_parks') }}">Español</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('national_parks_en', park=selected_park) }}">English</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('national_parks', park=selected_park) }}">Español</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('national_parks_fr', park=selected_park) }}">Français</a></li>
                 </ul>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
