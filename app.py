@@ -11,7 +11,7 @@ import unicodedata
 
 # Funciones externas
 # Load data
-file_path = "static\data\Parques_Nacionales_with_descriptions.csv"
+file_path = os.path.join('static', 'data', 'Parques_Nacionales_with_descriptions.csv')
 df = pd.read_csv(file_path)
 
 # Define land cover categories
