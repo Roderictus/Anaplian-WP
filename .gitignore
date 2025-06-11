@@ -1,2 +1,9 @@
-/static
-/videos
+#/static
+#/videos
+*.gif
+*.png
+*.mp4
+*.ICO
+*.jpg
+
+

@@ -1,0 +1,405 @@
+/* Custom Styles */
+
+/* General Styles */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    padding-top: 70px; /* Adjust for fixed navbar */
+}
+
+/* Hero Section */
+#hero {
+    background-image: url('../static/GiFs/20240924-Laguna-de-Chapala-Este.gif');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+#hero .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the color and opacity as needed */
+    z-index: 1;
+}
+
+#hero h1, #hero p {
+    position: relative;
+    z-index: 2;
+}
+
+/* Section Spacing */
+section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+/* Contact Section */
+#contact h5 {
+    font-weight: bold;
+}
+
+/* Navbar Brand */
+.navbar-brand {
+    font-weight: bold;
+}
+
+
+
+/* Footer Styles */
+footer {
+    background-color: #f8f9fa;
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+}
+
+/* Centered Images in "Who We Are" */
+#who-we-are img {
+    margin: 0 auto;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767px) {
+    #hero img {
+        height: auto;
+    }
+}
+
+/* New Color Palette for Top Color Bar */
+:root {
+    --color-bar-orange: #4158A6;
+    --color-bar-cream: #F1DEC6;
+    --color-bar-teal: #179BAE;
+    --color-bar-blue: #4158A6;
+
+    /* Existing Color Palette */
+    --primary-color: #333333;
+    --secondary-color: #2ecc71;
+    --accent-color: #e74c3c;
+    --background-color: #f8f9fa;
+    --text-color: #333333;
+}
+
+/* Body Styling */
+body {
+    padding-top: 60px; /* Adjust based on fixed elements' heights */
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+/* Top Color Bar */
+.color-bar {
+    display: flex;
+    height: 30px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1030;
+}
+
+/* Individual Color Segments */
+.color-bar .color-segment {
+    flex: 1;
+}
+
+.color-bar .color-orange {
+    background-color: var(--color-bar-orange);
+}
+
+.color-bar .color-cream {
+    background-color: var(--color-bar-cream);
+}
+
+.color-bar .color-teal {
+    background-color: var(--color-bar-teal);
+}
+
+.color-bar .color-blue {
+    background-color: var(--color-bar-blue);
+}
+
+/* Apply Background and Text Colors */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: var(--primary-color) !important;
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link {
+    color: #ffffff !important;
+}
+
+.navbar .nav-link:hover {
+    color: var(--secondary-color) !important;
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-secondary {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.btn-secondary:hover {
+    background-color: #c0392b;
+    border-color: #c0392b;
+}
+
+/* Footer Styles */
+footer {
+    background-color: var(--primary-color);
+    color: #ffffff;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--primary-color);
+}
+
+/* Links */
+a {
+    color: var(--primary-color);
+}
+
+a:hover {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.small-gif {
+    max-width: 200px; /* Adjust the value as needed */
+    height: auto;
+}
+
+.card video {
+    width: 100%;
+    height: auto;
+}
+
+/* Optional: Add hover effects to video cards */
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.02);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Responsive adjustments if needed */
+@media (max-width: 576px) {
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+   /* Estilo para las secciones */
+   section {
+    padding: 60px 0;
+}
+
+/* Estilo para los títulos */
+section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+/* Estilo para los párrafos */
+section p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* Estilo para los subtítulos en negrita */
+section p strong {
+    color: #2c3e50;
+}
+
+/* Estilo para la sección de Blog */
+#blog {
+    padding: 60px 0;
+    background-color: #f9f9f9;
+}
+
+#blog h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+#blog p.text-center {
+    font-size: 1.1rem;
+    color: #6c757d;
+}
+
+
+
+/* styles.css */
+
+/* Estilos para las imágenes con leyendas en los Blog Posts */
+.figure {
+    margin-bottom: 1.5rem;
+}
+
+.figure img {
+    max-width: 100%;
+    height: auto;
+}
+
+.figure-caption {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-top: 0.5rem;
+}
+
+/* Estilos para la sección del Blog Post */
+#blog {
+    padding: 60px 0;
+    background-color: #f9f9f9;
+}
+
+#blog h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+#blog p.text-center {
+    font-size: 1.1rem;
+    color: #6c757d;
+}
+
+
+#blog-post h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+#blog-post p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+#blog-post h3 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+#blog-post ol,
+#blog-post ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+#park-details, #video-gallery {
+    transition: all 0.5s ease;
+}
+
+/* Clase personalizada para el botón naranja grande y centrado */
+.btn-orange {
+    background-color: orange;
+    color: white;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-orange:hover {
+    background-color: darkorange;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Clase personalizada para centrar todas las figuras */
+.centered-figure {
+    display: inline-block;
+}
+
+.text-center-container {
+    text-align: center;
+}
+
+.bg-light-turquoise {
+    background-color: #5dad76; /* Light Turquoise */
+    padding: 60px 0; /* Optional: Add padding for better spacing */
+}
+
+.bg-dark-orange {
+    background-color: #FF8C00; /* Adjust this color as needed */
+    padding: 50px 0;
+    color: #fff; /* Text color for contrast */
+}
+
+/* Blog cards styling */
+#blog .card {
+    transition: transform 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+#blog .card:hover {
+    transform: translateY(-5px);
+}
+
+#blog .card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+}
+
+.video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+}
+
+#parkDescription {
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+    line-height: 1.6;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: opacity 0.3s ease;
+}
+
+.updating {
+    opacity: 0.5;
+}
