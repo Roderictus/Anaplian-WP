@@ -1,6 +1,4 @@
-
-
-
+import math
 import matplotlib
 matplotlib.use('Agg')
 from flask import Flask, render_template, request, Response, url_for
@@ -429,25 +427,67 @@ def national_parks_fr():
                            park_description=park_description)
 
 
+####################################################################################
+
 @app.route('/indonesia_parks')
 def indonesia_parks():
-    # 1. Definir la ruta a la carpeta de imágenes relativa a la carpeta 'static'
-    # Flask buscará esta ruta dentro de /static/
+    # 1. GET LANGUAGE AND PAGE PARAMETERS FROM URL
+    lang = request.args.get('lang', 'es')  # Default to Spanish
+    page = request.args.get('page', 1, type=int)
+
+    # 2. DEFINE TRANSLATIONS
+    translations = {
+        'es': {
+            'title': 'Parques Nacionales de Indonesia',
+            'header': 'Cobertura Vegetal - Parques Nacionales de Indonesia',
+            'desc': 'Explora la cobertura vegetal de varios parques nacionales a lo largo de Indonesia. Cada tarjeta muestra una visualización del mapa de cobertura terrestre.',
+            'empty': 'No se encontraron imágenes en el directorio.'
+        },
+        'en': {
+            'title': 'Indonesian National Parks',
+            'header': 'Land Cover - Indonesian National Parks',
+            'desc': 'Explore the land cover of various national parks throughout Indonesia. Each card shows a visualization of the land cover map.',
+            'empty': 'No images were found in the directory.'
+        },
+        'fr': {
+            'title': 'Parcs Nationaux d\'Indonésie',
+            'header': 'Couverture Terrestre - Parcs Nationaux d\'Indonésie',
+            'desc': 'Explorez la couverture terrestre de divers parcs nationaux à travers l\'Indonésie. Chaque carte présente une visualisation de la carte de la couverture terrestre.',
+            'empty': 'Aucune image trouvée dans le répertoire.'
+        }
+    }
+    text_content = translations.get(lang, translations['es']) # Safely get text, default to Spanish
+
+    # 3. GET IMAGE FILES
     image_folder_path = 'images/Indonesia/Indonesia_Land_Cover'
-    
-    # 2. Construir la ruta absoluta para que el script de Python pueda leer el directorio
     full_path = os.path.join(app.static_folder, image_folder_path)
-
-    # 3. Obtener la lista de archivos, filtrando solo por extensiones de imagen comunes
     try:
-        all_files = os.listdir(full_path)
-        image_files = [f for f in all_files if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+        # Sort files alphabetically to ensure consistent order
+        all_files = sorted([f for f in os.listdir(full_path) if f.lower().endswith(('.png', '.jpg', '.jpeg'))])
     except FileNotFoundError:
-        # Si la carpeta no existe, pasa una lista vacía para evitar un error
-        image_files = []
+        all_files = []
 
-    # 4. Renderizar la plantilla, pasando la ruta base y la lista de nombres de archivo
-    return render_template('indonesia.html', image_files=image_files, image_folder=image_folder_path)
+    # 4. PAGINATION LOGIC
+    items_per_page = 20
+    total_items = len(all_files)
+    total_pages = math.ceil(total_items / items_per_page)
+    start_index = (page - 1) * items_per_page
+    end_index = start_index + items_per_page
+    paginated_files = all_files[start_index:end_index]
+
+    # 5. RENDER TEMPLATE WITH ALL THE NEW DATA
+    return render_template(
+        'indonesia.html',
+        image_files=paginated_files,
+        image_folder=image_folder_path,
+        current_page=page,
+        total_pages=total_pages,
+        lang=lang,
+        text=text_content
+    )
+
+###################################################################################
+
 
 
 if __name__ == "__main__":
