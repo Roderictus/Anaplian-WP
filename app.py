@@ -133,30 +133,10 @@ def national_parks():
                            land_cover_data=land_cover_data,
                            park_description=park_description)
 
-@app.route('/indonesia')
-def indonesia_parks():
-    # 1. Definir la ruta a la carpeta de imágenes relativa a la carpeta 'static'
-    # Flask buscará esta ruta dentro de /static/
-    image_folder_path = 'images/Indonesia/Indonesia_Land_Cover'
-    
-    # 2. Construir la ruta absoluta para que el script de Python pueda leer el directorio
-    full_path = os.path.join(app.static_folder, image_folder_path)
-
-    # 3. Obtener la lista de archivos, filtrando solo por extensiones de imagen comunes
-    try:
-        all_files = os.listdir(full_path)
-        image_files = [f for f in all_files if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
-    except FileNotFoundError:
-        # Si la carpeta no existe, pasa una lista vacía para evitar un error
-        image_files = []
-
-    # 4. Renderizar la plantilla, pasando la ruta base y la lista de nombres de archivo
-    return render_template('indonesia.html', image_files=image_files, image_folder=image_folder_path)
 
 
-# Esto permite ejecutar la app con 'python app.py'
-if __name__ == '__main__':
-    app.run(debug=True)
+
+
 
 
 @app.route("/plot")
@@ -444,6 +424,28 @@ def national_parks_fr():
                            image_filename=image_filename,
                            land_cover_data=land_cover_data,
                            park_description=park_description)
+
+
+@app.route('/indonesia_parks')
+def indonesia_parks():
+    # 1. Definir la ruta a la carpeta de imágenes relativa a la carpeta 'static'
+    # Flask buscará esta ruta dentro de /static/
+    image_folder_path = 'images/Indonesia/Indonesia_Land_Cover'
+    
+    # 2. Construir la ruta absoluta para que el script de Python pueda leer el directorio
+    full_path = os.path.join(app.static_folder, image_folder_path)
+
+    # 3. Obtener la lista de archivos, filtrando solo por extensiones de imagen comunes
+    try:
+        all_files = os.listdir(full_path)
+        image_files = [f for f in all_files if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+    except FileNotFoundError:
+        # Si la carpeta no existe, pasa una lista vacía para evitar un error
+        image_files = []
+
+    # 4. Renderizar la plantilla, pasando la ruta base y la lista de nombres de archivo
+    return render_template('indonesia.html', image_files=image_files, image_folder=image_folder_path)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
