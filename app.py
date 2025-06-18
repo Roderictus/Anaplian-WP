@@ -9,6 +9,21 @@ import numpy as np
 import os
 import re
 import unicodedata
+import json
+
+# Define these mappings globally in your app.py, outside of any function
+# This maps the CSV column number to a human-readable label
+INDONESIA_LAND_COVER_LABELS = {
+    10: "Tree cover", 20: "Shrubland", 30: "Grassland", 40: "Cropland",
+    50: "Built-up", 60: "Bare / Sparse vegetation", 70: "Snow and Ice",
+    80: "Permanent water bodies", 90: "Herbaceous Wetland", 95: "Mangrove", 100: "Moss & Lichen"
+}
+# Pre-defined colors for the chart, matching the WorldCover standard
+INDONESIA_CHART_COLORS = [
+    '#006400', '#c0c000', '#408000', '#e0e000', '#e00000',
+    '#ffaa7f', '#ffffff', '#0080ff', '#00ffff', '#009999', '#bfbfbf'
+]
+
 
 # Funciones externas
 # Load data
@@ -427,58 +442,84 @@ def national_parks_fr():
                            park_description=park_description)
 
 
-####################################################################################
+############    INDONESIA#####################
 
 @app.route('/indonesia_parks')
 def indonesia_parks():
-    # 1. GET LANGUAGE AND PAGE PARAMETERS FROM URL
-    lang = request.args.get('lang', 'es')  # Default to Spanish
+    # --- 1. SETUP LANGUAGE, PAGINATION, AND LOAD DATA ---
+    lang = request.args.get('lang', 'es')
     page = request.args.get('page', 1, type=int)
-
-    # 2. DEFINE TRANSLATIONS
+    
     translations = {
-        'es': {
-            'title': 'Parques Nacionales de Indonesia',
-            'header': 'Cobertura Vegetal - Parques Nacionales de Indonesia',
-            'desc': 'Explora la cobertura vegetal de varios parques nacionales a lo largo de Indonesia. Cada tarjeta muestra una visualización del mapa de cobertura terrestre.',
-            'empty': 'No se encontraron imágenes en el directorio.'
-        },
-        'en': {
-            'title': 'Indonesian National Parks',
-            'header': 'Land Cover - Indonesian National Parks',
-            'desc': 'Explore the land cover of various national parks throughout Indonesia. Each card shows a visualization of the land cover map.',
-            'empty': 'No images were found in the directory.'
-        },
-        'fr': {
-            'title': 'Parcs Nationaux d\'Indonésie',
-            'header': 'Couverture Terrestre - Parcs Nationaux d\'Indonésie',
-            'desc': 'Explorez la couverture terrestre de divers parcs nationaux à travers l\'Indonésie. Chaque carte présente une visualisation de la carte de la couverture terrestre.',
-            'empty': 'Aucune image trouvée dans le répertoire.'
-        }
+        'es': {'title': 'Parques de Indonesia', 'header': 'Parques Nacionales de Indonesia', 'desc': 'Haga clic en un parque para ver detalles.', 'empty': 'No se encontraron imágenes.', 'area_label': 'Área Total'},
+        'en': {'title': 'Indonesian Parks', 'header': 'Indonesian National Parks', 'desc': 'Click a park to see details.', 'empty': 'No images found.', 'area_label': 'Total Area'},
+        'fr': {'title': 'Parcs d\'Indonésie', 'header': 'Parcs Nationaux d\'Indonésie', 'desc': 'Cliquez sur un parc pour voir les détails.', 'empty': 'Aucune image trouvée.', 'area_label': 'Zone Totale'}
     }
-    text_content = translations.get(lang, translations['es']) # Safely get text, default to Spanish
+    text_content = translations.get(lang, translations['es'])
 
-    # 3. GET IMAGE FILES
+    # Load park statistics from CSV
+    try:
+        csv_path = os.path.join(app.static_folder, 'images/Indonesia/Indonesia_Land_Cover/Indonesia_worldcover_stats.csv')
+        parks_df = pd.read_csv(csv_path)
+
+        # ------------------- FIX IS HERE -------------------
+        # This new line removes any rows with duplicate park names, keeping the first one it finds.
+        # This guarantees that every park name in the DataFrame is now unique.
+        parks_df.drop_duplicates(subset=['Name'], keep='first', inplace=True)
+        # ---------------- END OF FIX -------------------
+
+        parks_df.set_index('Name', inplace=True) # Now it's safe to set the index.
+    except FileNotFoundError:
+        parks_df = pd.DataFrame()
+
+    # --- 2. COMBINE IMAGE FILES WITH CSV DATA ---
     image_folder_path = 'images/Indonesia/Indonesia_Land_Cover'
     full_path = os.path.join(app.static_folder, image_folder_path)
-    try:
-        # Sort files alphabetically to ensure consistent order
-        all_files = sorted([f for f in os.listdir(full_path) if f.lower().endswith(('.png', '.jpg', '.jpeg'))])
-    except FileNotFoundError:
-        all_files = []
+    all_park_data = []
 
-    # 4. PAGINATION LOGIC
+    try:
+        image_files = sorted([f for f in os.listdir(full_path) if f.lower().endswith(('.png', '.jpg', '.jpeg'))])
+        for image_file in image_files:
+            park_name_from_file = image_file.split('__')[0].replace('_', ' ')
+            
+            if not parks_df.empty and park_name_from_file in parks_df.index:
+                # Because we removed duplicates, this will now ALWAYS be a single row (a Series).
+                park_stats = parks_df.loc[park_name_from_file]
+
+                chart_labels = []
+                chart_percentages = []
+                for code, label in INDONESIA_LAND_COVER_LABELS.items():
+                    percentage_col = f'Percentage_{code}'
+                    # The line below will now work correctly without ambiguity.
+                    if percentage_col in park_stats and park_stats[percentage_col] > 0:
+                        chart_labels.append(label)
+                        chart_percentages.append(round(park_stats[percentage_col], 2))
+
+                all_park_data.append({
+                    'image_file': image_file,
+                    'park_name': park_name_from_file,
+                    'gis_area_ha': round(park_stats['GIS_AREA'], 2),
+                    'chart_data': {
+                        'labels': json.dumps(chart_labels),
+                        'percentages': json.dumps(chart_percentages),
+                        'colors': json.dumps(INDONESIA_CHART_COLORS)
+                    }
+                })
+    except FileNotFoundError:
+        all_park_data = []
+
+    # --- 3. PAGINATION ---
     items_per_page = 20
-    total_items = len(all_files)
+    total_items = len(all_park_data)
     total_pages = math.ceil(total_items / items_per_page)
     start_index = (page - 1) * items_per_page
     end_index = start_index + items_per_page
-    paginated_files = all_files[start_index:end_index]
+    paginated_parks = all_park_data[start_index:end_index]
 
-    # 5. RENDER TEMPLATE WITH ALL THE NEW DATA
+    # --- 4. RENDER ---
     return render_template(
         'indonesia.html',
-        image_files=paginated_files,
+        parks_data=paginated_parks,
         image_folder=image_folder_path,
         current_page=page,
         total_pages=total_pages,
