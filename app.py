@@ -1,18 +1,22 @@
-import math
-import matplotlib
-matplotlib.use('Agg')
-from flask import Flask, render_template, request, Response, url_for
-import pandas as pd
-import matplotlib.pyplot as plt
-import io
-import numpy as np
+# app.py - OPTIMIZED VERSION
 import os
 import re
-import unicodedata
+import io
 import json
+import math
+import pandas as pd
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from flask import Flask, render_template, request, Response, url_for, redirect
 
-# Define these mappings globally in your app.py, outside of any function
-# This maps the CSV column number to a human-readable label
+ #--- 1. APP SETUP & GLOBAL CONSTANTS ---
+
+app = Flask(__name__)
+
+# Constants for park data processing
+
 INDONESIA_LAND_COVER_LABELS = {
     10: "Tree cover", 20: "Shrubland", 30: "Grassland", 40: "Cropland",
     50: "Built-up", 60: "Bare / Sparse vegetation", 70: "Snow and Ice",
@@ -23,6 +27,66 @@ INDONESIA_CHART_COLORS = [
     '#006400', '#c0c000', '#408000', '#e0e000', '#e00000',
     '#ffaa7f', '#ffffff', '#0080ff', '#00ffff', '#009999', '#bfbfbf'
 ]
+
+# --- 2. PRE-COMPUTATION / CACHING LOGIC ---
+
+def load_indonesia_data(static_folder_path):
+    """
+    This function does all the heavy lifting ONCE at startup.
+    It reads the CSV, finds all images, combines the data, and returns a clean list.
+    """
+    print("Loading and caching Indonesia park data...")
+    all_park_data = []
+    
+    try:
+        # Load and clean the CSV data
+        csv_path = os.path.join(static_folder_path, 'images/Indonesia/Indonesia_Land_Cover/Indonesia_worldcover_stats.csv')
+        parks_df = pd.read_csv(csv_path)
+        parks_df.drop_duplicates(subset=['Name'], keep='first', inplace=True)
+        parks_df.set_index('Name', inplace=True)
+
+        # Get all image files
+        image_folder_path = os.path.join(static_folder_path, 'images/Indonesia/Indonesia_Land_Cover')
+        image_files = sorted([f for f in os.listdir(image_folder_path) if f.lower().endswith(('.png', '.jpg', '.jpeg'))])
+
+        # Process and combine data for every park
+        for image_file in image_files:
+            park_name_from_file = image_file.split('__')[0].replace('_', ' ')
+            
+            if park_name_from_file in parks_df.index:
+                park_stats = parks_df.loc[park_name_from_file]
+                chart_labels = []
+                chart_percentages = []
+                for code, label in INDONESIA_LAND_COVER_LABELS.items():
+                    percentage_col = f'Percentage_{code}'
+                    if percentage_col in park_stats and park_stats[percentage_col] > 0:
+                        chart_labels.append(label)
+                        chart_percentages.append(round(park_stats[percentage_col], 2))
+
+                all_park_data.append({
+                    'image_file': image_file,
+                    'park_name': park_name_from_file,
+                    'gis_area_ha': round(park_stats['GIS_AREA'], 2),
+                    'chart_data': {
+                        'labels': json.dumps(chart_labels),
+                        'percentages': json.dumps(chart_percentages),
+                        'colors': json.dumps(INDONESIA_CHART_COLORS)
+                    }
+                })
+        print(f"Successfully cached data for {len(all_park_data)} Indonesian parks.")
+        return all_park_data
+
+    except FileNotFoundError as e:
+        print(f"WARNING: Could not load Indonesia data. File not found: {e.filename}")
+        return [] # Return an empty list on error
+    except Exception as e:
+        print(f"An unexpected error occurred during data loading: {e}")
+        return []
+
+# --- Run the loader function once and store the result in the cache ---
+CACHED_INDONESIA_DATA = load_indonesia_data(app.static_folder)
+
+
 
 
 # Funciones externas
@@ -44,8 +108,7 @@ def sanitize_name(name):
     """
     return re.sub(r'[^A-Za-z0-9]+', '_', name)
 
-# Flask y renders
-app = Flask(__name__)
+
 
 @app.route('/')
 def index():
@@ -444,9 +507,15 @@ def national_parks_fr():
 
 ############    INDONESIA#####################
 
+
 @app.route('/indonesia_parks')
 def indonesia_parks():
-    # --- 1. SETUP LANGUAGE, PAGINATION, AND LOAD DATA ---
+    """
+    This route is now extremely fast. It only does two things:
+    1. Gets the page number and language from the URL.
+    2. Slices the pre-cached data and renders the template.
+    NO file reading or heavy processing happens here anymore.
+    """
     lang = request.args.get('lang', 'es')
     page = request.args.get('page', 1, type=int)
     
@@ -457,70 +526,18 @@ def indonesia_parks():
     }
     text_content = translations.get(lang, translations['es'])
 
-    # Load park statistics from CSV
-    try:
-        csv_path = os.path.join(app.static_folder, 'images/Indonesia/Indonesia_Land_Cover/Indonesia_worldcover_stats.csv')
-        parks_df = pd.read_csv(csv_path)
-
-        # ------------------- FIX IS HERE -------------------
-        # This new line removes any rows with duplicate park names, keeping the first one it finds.
-        # This guarantees that every park name in the DataFrame is now unique.
-        parks_df.drop_duplicates(subset=['Name'], keep='first', inplace=True)
-        # ---------------- END OF FIX -------------------
-
-        parks_df.set_index('Name', inplace=True) # Now it's safe to set the index.
-    except FileNotFoundError:
-        parks_df = pd.DataFrame()
-
-    # --- 2. COMBINE IMAGE FILES WITH CSV DATA ---
-    image_folder_path = 'images/Indonesia/Indonesia_Land_Cover'
-    full_path = os.path.join(app.static_folder, image_folder_path)
-    all_park_data = []
-
-    try:
-        image_files = sorted([f for f in os.listdir(full_path) if f.lower().endswith(('.png', '.jpg', '.jpeg'))])
-        for image_file in image_files:
-            park_name_from_file = image_file.split('__')[0].replace('_', ' ')
-            
-            if not parks_df.empty and park_name_from_file in parks_df.index:
-                # Because we removed duplicates, this will now ALWAYS be a single row (a Series).
-                park_stats = parks_df.loc[park_name_from_file]
-
-                chart_labels = []
-                chart_percentages = []
-                for code, label in INDONESIA_LAND_COVER_LABELS.items():
-                    percentage_col = f'Percentage_{code}'
-                    # The line below will now work correctly without ambiguity.
-                    if percentage_col in park_stats and park_stats[percentage_col] > 0:
-                        chart_labels.append(label)
-                        chart_percentages.append(round(park_stats[percentage_col], 2))
-
-                all_park_data.append({
-                    'image_file': image_file,
-                    'park_name': park_name_from_file,
-                    'gis_area_ha': round(park_stats['GIS_AREA'], 2),
-                    'chart_data': {
-                        'labels': json.dumps(chart_labels),
-                        'percentages': json.dumps(chart_percentages),
-                        'colors': json.dumps(INDONESIA_CHART_COLORS)
-                    }
-                })
-    except FileNotFoundError:
-        all_park_data = []
-
-    # --- 3. PAGINATION ---
+    # PAGINATION (now on the cached data)
     items_per_page = 20
-    total_items = len(all_park_data)
+    total_items = len(CACHED_INDONESIA_DATA)
     total_pages = math.ceil(total_items / items_per_page)
     start_index = (page - 1) * items_per_page
     end_index = start_index + items_per_page
-    paginated_parks = all_park_data[start_index:end_index]
+    paginated_parks = CACHED_INDONESIA_DATA[start_index:end_index]
 
-    # --- 4. RENDER ---
     return render_template(
         'indonesia.html',
         parks_data=paginated_parks,
-        image_folder=image_folder_path,
+        image_folder='images/Indonesia/Indonesia_Land_Cover', # Pass the relative path for the template
         current_page=page,
         total_pages=total_pages,
         lang=lang,
