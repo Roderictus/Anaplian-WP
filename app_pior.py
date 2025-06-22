@@ -1,146 +1,113 @@
-# app.py - SCALABLE MULTI-COUNTRY VERSION
+# app.py - OPTIMIZED VERSION
 import os
 import re
 import io
 import json
 import math
 import pandas as pd
-from flask import Flask, render_template, request, abort
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from flask import Flask, render_template, request, Response, url_for, redirect
 
-# --- 1. APP SETUP & GLOBAL CONSTANTS ---
+ #--- 1. APP SETUP & GLOBAL CONSTANTS ---
 
 app = Flask(__name__)
 
-# Universal land cover definitions, mapping codes to English labels
-LAND_COVER_DEFINITIONS = {
+# Constants for park data processing
+
+INDONESIA_LAND_COVER_LABELS = {
     10: "Tree cover", 20: "Shrubland", 30: "Grassland", 40: "Cropland",
     50: "Built-up", 60: "Bare / Sparse vegetation", 70: "Snow and Ice",
     80: "Permanent water bodies", 90: "Herbaceous Wetland", 95: "Mangrove", 100: "Moss & Lichen"
 }
-# Universal color map for table swatches
-LAND_COVER_COLORS = {
-    "Tree cover": "#006400", "Shrubland": "#c0c000", "Grassland": "#408000",
-    "Cropland": "#e0e000", "Built-up": "#e00000", "Bare / Sparse vegetation": "#ffaa7f",
-    "Snow and Ice": "#ffffff", "Permanent water bodies": "#0080ff",
-    "Herbaceous Wetland": "#00ffff", "Mangrove": "#009999", "Moss & Lichen": "#bfbfbf"
-}
-# Translations for land cover labels (used in the template)
-LAND_COVER_TRANSLATIONS = {
-    'es': {
-        "Tree cover": "Cobertura arbórea", "Shrubland": "Zona de arbustos", "Grassland": "Pastizales",
-        "Cropland": "Cultivos", "Built-up": "Zona urbanizada", "Bare / Sparse vegetation": "Vegetación escasa o nula",
-        "Snow and Ice": "Nieve y hielo", "Permanent water bodies": "Cuerpos de agua permanentes",
-        "Herbaceous Wetland": "Humedal herbáceo", "Mangrove": "Manglar", "Moss & Lichen": "Musgo y liquen"
-    },
-    'fr': {
-        "Tree cover": "Couvert arboré", "Shrubland": "Zone arbustive", "Grassland": "Prairie",
-        "Cropland": "Terres cultivées", "Built-up": "Zone bâtie", "Bare / Sparse vegetation": "Végétation éparse ou nulle",
-        "Snow and Ice": "Neige et glace", "Permanent water bodies": "Plans d'eau permanents",
-        "Herbaceous Wetland": "Zone humide herbacée", "Mangrove": "Mangrove", "Moss & Lichen": "Mousse et lichen"
-    }
-}
+# Pre-defined colors for the chart, matching the WorldCover standard
+INDONESIA_CHART_COLORS = [
+    '#006400', '#c0c000', '#408000', '#e0e000', '#e00000',
+    '#ffaa7f', '#ffffff', '#0080ff', '#00ffff', '#009999', '#bfbfbf'
+]
 
+# --- 2. PRE-COMPUTATION / CACHING LOGIC ---
 
-# --- 2. PRE-COMPUTATION / CACHING LOGIC (RUNS ONLY ONCE AT STARTUP) ---
-
-def load_all_country_data(static_folder_path):
+def load_indonesia_data(static_folder_path):
     """
-    Reads the master CSV and processes data for ALL countries at once,
-    storing it in a structured dictionary for instant access later.
+    This function does all the heavy lifting ONCE at startup.
+    It reads the CSV, finds all images, combines the data, and returns a clean list.
     """
-    print("--- Loading and caching data for all countries... ---")
-    master_park_data = {}
+    print("Loading and caching Indonesia park data...")
+    all_park_data = []
+    
     try:
-        csv_path = os.path.join(static_folder_path, 'data', 'Combined_country_recalculated.csv')
-        df = pd.read_csv(csv_path)
-        df.fillna({'DESIG': 'N/A', 'GOV_TYPE': 'N/A'}, inplace=True) # Handle potential missing values
-    except FileNotFoundError:
-        print(f"FATAL ERROR: Master CSV not found at {csv_path}")
-        return {}
+        # Load and clean the CSV data
+        csv_path = os.path.join(static_folder_path, 'images/Indonesia/Indonesia_Land_Cover/Indonesia_worldcover_stats.csv')
+        parks_df = pd.read_csv(csv_path)
+        parks_df.drop_duplicates(subset=['Name'], keep='first', inplace=True)
+        parks_df.set_index('Name', inplace=True)
 
-    for country_name, country_df in df.groupby('Country'):
-        print(f"Processing {country_name}...")
-        country_park_list = []
-        image_folder = os.path.join(static_folder_path, 'images', country_name, "Land_Cover")
+        # Get all image files
+        image_folder_path = os.path.join(static_folder_path, 'images/Indonesia/Indonesia_Land_Cover')
+        image_files = sorted([f for f in os.listdir(image_folder_path) if f.lower().endswith(('.png', '.jpg', '.jpeg'))])
 
-        if not os.path.isdir(image_folder):
-            print(f"WARNING: Image directory not found for {country_name} at {image_folder}. Skipping.")
-            continue
-
-        image_files = {f.split('__')[0].replace('_', ' ').lower(): f for f in os.listdir(image_folder)}
-        
-        for _, park_row in country_df.iterrows():
-            park_name_sanitized = park_row['Name'].lower()
+        # Process and combine data for every park
+        for image_file in image_files:
+            park_name_from_file = image_file.split('__')[0].replace('_', ' ')
             
-            if park_name_sanitized in image_files:
-                land_cover_table = []
-                for code, label in LAND_COVER_DEFINITIONS.items():
+            if park_name_from_file in parks_df.index:
+                park_stats = parks_df.loc[park_name_from_file]
+                chart_labels = []
+                chart_percentages = []
+                for code, label in INDONESIA_LAND_COVER_LABELS.items():
                     percentage_col = f'Percentage_{code}'
-                    if percentage_col in park_row and park_row[percentage_col] > 0:
-                        land_cover_table.append({
-                            "label": label,
-                            "percentage": round(park_row[percentage_col], 2),
-                            "color": LAND_COVER_COLORS.get(label, '#808080')
-                        })
-                
-                land_cover_table.sort(key=lambda x: x['percentage'], reverse=True)
+                    if percentage_col in park_stats and park_stats[percentage_col] > 0:
+                        chart_labels.append(label)
+                        chart_percentages.append(round(park_stats[percentage_col], 2))
 
-                country_park_list.append({
-                    'name': park_row['Name'],
-                    'image_file': image_files[park_name_sanitized],
-                    'desig': park_row['DESIG'],
-                    'gov_type': park_row['GOV_TYPE'],
-                    'gis_area': round(park_row.get('GIS_AREA', 0), 2),
-                    'land_cover_table': land_cover_table
+                all_park_data.append({
+                    'image_file': image_file,
+                    'park_name': park_name_from_file,
+                    'gis_area_ha': round(park_stats['GIS_AREA'], 2),
+                    'chart_data': {
+                        'labels': json.dumps(chart_labels),
+                        'percentages': json.dumps(chart_percentages),
+                        'colors': json.dumps(INDONESIA_CHART_COLORS)
+                    }
                 })
-        
-        master_park_data[country_name] = sorted(country_park_list, key=lambda p: p['name'])
-        print(f"-> Cached {len(country_park_list)} parks for {country_name}.")
-    
-    print("--- Caching complete. ---")
-    return master_park_data
+        print(f"Successfully cached data for {len(all_park_data)} Indonesian parks.")
+        return all_park_data
 
-# Run the loader function once and store the result in the global cache
-CACHED_PARK_DATA = load_all_country_data(app.static_folder)
+    except FileNotFoundError as e:
+        print(f"WARNING: Could not load Indonesia data. File not found: {e.filename}")
+        return [] # Return an empty list on error
+    except Exception as e:
+        print(f"An unexpected error occurred during data loading: {e}")
+        return []
 
-
-# --- 3. DYNAMIC ROUTE FOR ALL COUNTRIES ---
-
-@app.route("/country/<string:country_name>")
-def show_country(country_name):
-
-    country_key = country_name.capitalize()
-
-    if country_key not in CACHED_PARK_DATA:
-        abort(404, description=f"Data for country '{country_key}' not found.")
-
-    lang = request.args.get('lang', 'es')
-    page = request.args.get('page', 1, type=int)
-
-    country_data = CACHED_PARK_DATA[country_key]
-    
-    items_per_page = 20
-    total_items = len(country_data)
-    total_pages = math.ceil(total_items / items_per_page)
-    start_index = (page - 1) * items_per_page
-    end_index = start_index + items_per_page
-    paginated_parks = country_data[start_index:end_index]
-
-    context = {
-        'country_name': country_key,
-        'parks_data': paginated_parks,
-        'image_folder': f"images/{country_key}/Land_Cover",
-        'current_page': page,
-        'total_pages': total_pages,
-        'lang': lang,
-        'land_cover_translations': json.dumps(LAND_COVER_TRANSLATIONS.get(lang, {})),
-    }
-
-    template_name = f"{country_name.lower()}.html"
-    return render_template(template_name, **context)
+# --- Run the loader function once and store the result in the cache ---
+CACHED_INDONESIA_DATA = load_indonesia_data(app.static_folder)
 
 
-# --- 4. LEGACY AND OTHER ROUTES  ---
+
+
+# Funciones externas
+# Load data
+file_path = os.path.join('static', 'data', 'Parques_Nacionales_with_descriptions.csv')
+df = pd.read_csv(file_path)
+
+# Define land cover categories
+land_cover_columns = [
+    "Percentage_Tree_Cover", "Percentage_Shrubland", "Percentage_Grassland",
+    "Percentage_Cropland", "Percentage_Built-up", "Percentage_Bare_Sparse_Vegetation",
+    "Percentage_Snow_and_Ice", "Percentage_Permanent_Water_body", "Percentage_Herbaceous_Wetland",
+    "Percentage_Mangrove", "Percentage_Moss_and_Lichen"
+]
+
+def sanitize_name(name):
+    """
+    Replace any sequence of non-alphanumeric characters with a single underscore.
+    """
+    return re.sub(r'[^A-Za-z0-9]+', '_', name)
+
 
 
 @app.route('/')
@@ -244,6 +211,10 @@ def national_parks():
                            image_filename=image_filename,
                            land_cover_data=land_cover_data,
                            park_description=park_description)
+
+
+
+
 
 
 
@@ -534,7 +505,49 @@ def national_parks_fr():
                            park_description=park_description)
 
 
+############    INDONESIA#####################
 
-# --- 5. APP LAUNCHER ---
+
+@app.route('/indonesia_parks')
+def indonesia_parks():
+    """
+    This route is now extremely fast. It only does two things:
+    1. Gets the page number and language from the URL.
+    2. Slices the pre-cached data and renders the template.
+    NO file reading or heavy processing happens here anymore.
+    """
+    lang = request.args.get('lang', 'es')
+    page = request.args.get('page', 1, type=int)
+    
+    translations = {
+        'es': {'title': 'Parques de Indonesia', 'header': 'Parques Nacionales de Indonesia', 'desc': 'Haga clic en un parque para ver detalles.', 'empty': 'No se encontraron imágenes.', 'area_label': 'Área Total'},
+        'en': {'title': 'Indonesian Parks', 'header': 'Indonesian National Parks', 'desc': 'Click a park to see details.', 'empty': 'No images found.', 'area_label': 'Total Area'},
+        'fr': {'title': 'Parcs d\'Indonésie', 'header': 'Parcs Nationaux d\'Indonésie', 'desc': 'Cliquez sur un parc pour voir les détails.', 'empty': 'Aucune image trouvée.', 'area_label': 'Zone Totale'}
+    }
+    text_content = translations.get(lang, translations['es'])
+
+    # PAGINATION (now on the cached data)
+    items_per_page = 20
+    total_items = len(CACHED_INDONESIA_DATA)
+    total_pages = math.ceil(total_items / items_per_page)
+    start_index = (page - 1) * items_per_page
+    end_index = start_index + items_per_page
+    paginated_parks = CACHED_INDONESIA_DATA[start_index:end_index]
+
+    return render_template(
+        'indonesia.html',
+        parks_data=paginated_parks,
+        image_folder='images/Indonesia/Indonesia_Land_Cover', # Pass the relative path for the template
+        current_page=page,
+        total_pages=total_pages,
+        lang=lang,
+        text=text_content
+    )
+
+###################################################################################
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)
+
