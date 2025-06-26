@@ -40,6 +40,19 @@ LAND_COVER_TRANSLATIONS = {
     }
 }
 
+land_cover_columns = [
+    "Percentage_Tree_Cover", "Percentage_Shrubland", "Percentage_Grassland",
+    "Percentage_Cropland", "Percentage_Built-up", "Percentage_Bare_Sparse_Vegetation",
+    "Percentage_Snow_and_Ice", "Percentage_Permanent_Water_body", "Percentage_Herbaceous_Wetland",
+    "Percentage_Mangrove", "Percentage_Moss_and_Lichen"
+    ]
+
+def sanitize_name(name):
+    """
+    Replace any sequence of non-alphanumeric characters with a single underscore.
+    """
+    return re.sub(r'[^A-Za-z0-9]+', '_', name)
+
 
 # --- 2. PRE-COMPUTATION / CACHING LOGIC (RUNS ONLY ONCE AT STARTUP) ---
 
