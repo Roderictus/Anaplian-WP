@@ -146,7 +146,8 @@ def show_country(country_name):
         'current_page': page,
         'total_pages': total_pages,
         'lang': lang,
-        'land_cover_translations': json.dumps(LAND_COVER_TRANSLATIONS.get(lang, {})),
+        #'land_cover_translations': json.dumps(LAND_COVER_TRANSLATIONS.get(lang, {})), # may be incorrect
+        'land_cover_translations': LAND_COVER_TRANSLATIONS.get(lang, {}), #potential correction
     }
 
     template_name = f"{country_name.lower()}.html"
@@ -258,8 +259,6 @@ def national_parks():
                            land_cover_data=land_cover_data,
                            park_description=park_description)
 
-
-
 @app.route("/plot")
 def plot():
     park_name = request.args.get("park", df["Name"].iloc[0])
@@ -338,7 +337,6 @@ def plot():
     plt.close(fig)
 
     return Response(img.getvalue(), mimetype="image/png")
-
 
 @app.route('/blog_post_2')
 def blog_post_2():
@@ -545,8 +543,6 @@ def national_parks_fr():
                            image_filename=image_filename,
                            land_cover_data=land_cover_data,
                            park_description=park_description)
-
-
 
 # --- 5. APP LAUNCHER ---
 if __name__ == "__main__":
