@@ -1,80 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ lang }}">
 <head>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='Anaplian_Favicon.ico') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='Anaplian_Favicon.ico') }}">
-    
-
     <meta charset="UTF-8">
-    <title>Anaplian</title>
-    <!-- Responsive Meta Tag -->
+    <title>{{ text.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Anaplian - Research, applied.">
-    <!-- Open Graph Meta Tags -->
+    <meta name="description" content="{{ text.meta_desc }}">
     <meta property="og:title" content="Anaplian">
     <meta property="og:description" content="State of the art research adapted to your company needs.">
-    <meta property="og:image" content="Images/anaplian-logo.png">
-    <meta property="og:url" content="https://anaplian.com">
-    <!-- Bootstrap 5 CSS -->
+    <meta property="og:image" content="{{ url_for('static', filename='images/anaplian-logo.png') }}">
+    <meta property="og:url" content="{{ request.url }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Custom Styles -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
-
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#hero">Anaplian</a>
+            <a class="navbar-brand" href="{{ url_for('index', lang=lang) }}#hero">Anaplian</a>
             <div class="navbar-brand ms-3 dropdown">
                 <button class="btn btn-light dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-globe"></i> Language
+                    <i class="fas fa-globe"></i> {{ text.lang_button }}
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-                    <li><a class="dropdown-item" href="{{ url_for('index', lang='en') }}">English</a></li>
-                    <li><a class="dropdown-item" href="{{ url_for('index', lang='es') }}">Español</a></li>
-                    <li><a class="dropdown-item" href="{{ url_for('index', lang='fr') }}">Français</a></li>
+                    <li><a class="dropdown-item {% if lang == 'en' %}active{% endif %}" href="{{ url_for('index', lang='en') }}">English</a></li>
+                    <li><a class="dropdown-item {% if lang == 'es' %}active{% endif %}" href="{{ url_for('index', lang='es') }}">Español</a></li>
+                    <li><a class="dropdown-item {% if lang == 'fr' %}active{% endif %}" href="{{ url_for('index', lang='fr') }}">Français</a></li>
                 </ul>
             </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-    
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
-                    <!-- Updated navigation links -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="#hero">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#who-we-are">Who We Are</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('national_parks') }}">National Parks</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#hero">{{ text.nav_home }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#who-we-are">{{ text.nav_who }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">{{ text.nav_contact }}</a></li>
+                    <!-- Update this link when ready -->
+                    <li class="nav-item"><a class="nav-link" href="#">{{ text.nav_parks }}</a></li>
                 </ul>
             </div>
         </div>
     </nav>
     
-
-    
     <!-- Hero Section -->
     <section id="hero" class="d-flex align-items-center" style="height: 80vh;">
         <div class="container text-center position-relative" style="z-index: 2;">
             <img src="{{ url_for('static', filename='images/anaplian-logo.png') }}" alt="Anaplian Logo" class="img-fluid mb-2" style="max-width: 300px; height: auto;">
-            <h1 class="text-white">Welcome to Anaplian</h1>
-            <p class="lead text-white">Applying state of the art research in geospatial and socio-economic fields to your company needs.</p>
-            <a href="#who-we-are" class="btn btn-primary mt-3">Learn More</a>
+            <h1 class="text-white">{{ text.hero_title }}</h1>
+            <p class="lead text-white">{{ text.hero_subtitle }}</p>
+            <a href="#who-we-are" class="btn btn-primary mt-3">{{ text.learn_more_button }}</a>
         </div>
         <div class="overlay"></div>
     </section>
@@ -82,64 +58,51 @@
     <!-- National Parks Section -->
     <section id="national-parks" class="mt-5 bg-light-turquoise">
         <div class="container text-center">
-            <h2 class="mb-4">National Parks Surveillance and Monitoring through Satellite Data</h2>
-            <p class="lead">
-                Independent comparable automated data for Natural Protected Areas Surveillance and Monitoring.
-                        </p>
-            <a href="{{ url_for('national_parks') }}" class="btn btn-orange btn-lg mt-3">Learn More About National Parks</a>
+            <h2 class="mb-4">{{ text.parks_title }}</h2>
+            <p class="lead">{{ text.parks_subtitle }}</p>
+            <!-- Update this link when ready -->
+            <a href="#" class="btn btn-orange btn-lg mt-3">{{ text.learn_more_parks_button }}</a>
         </div>
     </section>
 
     <!-- Indonesia Section -->
-    <section id="indonesa-parks" class="mt-5 bg-light-turquoise">
+    <section id="indonesia-parks" class="mt-5 bg-light-turquoise">
         <div class="container text-center">
-            <h2 class="mb-4">Indonesia National Parks</h2>
-            <p class="lead">
-                Land Cover in Indonesia National Parks.
-                        </p>
-            <a href="{{ url_for('show_country', country_name='Indonesia') }}" class="btn btn-orange btn-lg mt-3">Indonesia National Parks</a>
+            <h2 class="mb-4">{{ text.indonesia_title }}</h2>
+            <p class="lead">{{ text.indonesia_subtitle }}</p>
+            <a href="{{ url_for('show_country', country_name='indonesia', lang=lang) }}" class="btn btn-orange btn-lg mt-3">{{ text.indonesia_button }}</a>
         </div>
     </section>
 
     <!-- Blog Section -->
     <section id="blog" class="mt-5 bg-dark-orange">
         <div class="container text-center">
-            <h2 class="text-center">Blog</h2>
-            <p class="text-center">Stay updated with our latest insights and developments in applied research and socio-economic solutions.</p>
-            
-            <div class="row mt-4">
-                <!-- Blog Post 1 -->
+            <h2 class="text-center">{{ text.blog_title }}</h2>
+            <p class="text-center">{{ text.blog_subtitle }}</p>
+            <div class="row mt-4 justify-content-center">
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
                         <img src="{{ url_for('static', filename='images/Blog/La_Monta_a_Malinche_o_Matlalcu_yatl_V1_0.png') }}" class="card-img-top" alt="Blog Post 1">
                         <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Parques Nacionales ¿Que tan protegidas están nuestras Áreas Naturales Protegidas?</h5>
-                            <p class="card-text">Motivados por nuestra pasión por el senderismo y alertados por el deterioro visible de algunas rutas, varios integrantes del equipo de Anaplian, junto con México en Datos, decidimos realizar un diagnóstico de las Áreas Naturales Protegidas ante la falta de datos oficiales.</p>
-                            <a href="{{ url_for('blog_post_2') }}" class="btn btn-primary mt-auto">Ir a la entrada del blog</a>
+                            <h5 class="card-title">{{ text.blog1_title }}</h5>
+                            <p class="card-text">{{ text.blog1_desc }}</p>
+                            <a href="#" class="btn btn-primary mt-auto">{{ text.blog_button_main }}</a>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Blog Post 2 -->
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
                         <img src="{{ url_for('static', filename='images/Blog/Vista_del_Dashboard.png') }}" class="card-img-top" alt="Blog Post 2">
                         <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Developments in the Automated Dashboard for Monitoring National Parks</h5>
-                            <p class="card-text">Anaplian begins the year 2025 with progress on one of our favorite public projects: the development of an automated dashboard for monitoring National Parks.</p>
-                            <a href="{{ url_for('blog_post_1') }}" class="btn btn-primary mt-auto">Ir a la entrada del blog</a>
+                            <h5 class="card-title">{{ text.blog2_title }}</h5>
+                            <p class="card-text">{{ text.blog2_desc }}</p>
+                            <a href="#" class="btn btn-primary mt-auto">{{ text.blog_button_main }}</a>
                         </div>
                     </div>
                 </div>
-                
-                <!-- You can add a third blog post here to fill the row -->
-                <div class="col-md-4 mb-4">
-                    <!-- Third blog post content -->
-                </div>
             </div>
-            
             <div class="text-center mt-4">
-                <a href="{{ url_for('blog') }}" class="btn btn-secondary">View All Blog Posts</a>
+                <a href="#" class="btn btn-secondary">{{ text.blog_button_all }}</a>
             </div>
         </div>
     </section>
@@ -147,53 +110,53 @@
     <!-- Who We Are Section -->
     <section id="who-we-are" class="mt-5">
         <div class="container">
-            <h2 class="text-center">Who We Are</h2>
+            <h2 class="text-center">{{ text.who_title }}</h2>
             <div class="row justify-content-center mt-4">
-                <!-- Team Member 1 -->
+                <!-- Team Member 1: Rodrigo -->
                 <div class="col-md-6 col-lg-3 mb-4">
                     <div class="card h-100 text-center">
-                        <img src="{{ url_for('static', filename='images/team/RFF_cuadrada.jpg') }}" class="card-img-top rounded-circle mx-auto mt-3" class="card-img-top rounded-circle mx-auto mt-3" alt="Rodrigo Franco" style="width: 100px; height: 100px;">
+                        <img src="{{ url_for('static', filename='images/team/RFF_cuadrada.jpg') }}" class="card-img-top rounded-circle mx-auto mt-3" alt="Rodrigo Franco" style="width: 100px; height: 100px;">
                         <div class="card-body">
                             <h5 class="card-title">Rodrigo Franco</h5>
-                            <p class="card-text">With 20 years of experience in data science, economics, and consulting, I created Anaplian to bring practical, data-driven insights to businesses. </p>
-                            <p class="card-text">My work has spanned various sectors, from economic impact studies to sustainability projects. I've led teams and managed projects for both public and private organizations, always focusing on delivering results that make a difference. </p>
-                            <p class="card-text">At Anaplian, I bring that same commitment to each client, ensuring our services are tailored to your specific needs and challenges. Anaplian is all about turning data into meaningful insights. Whether you need help with data analysis, financial modeling, or understanding the economic impact of your decisions, we're here to provide straightforward, reliable solutions. With our expertise, we aim to help your business thrive in today's complex, data-driven world.</p>
-                            </div>
+                            {% for paragraph in text.team.rodrigo %}
+                            <p class="card-text">{{ paragraph }}</p>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-                <!-- Team Member 2 -->
+                <!-- Team Member 2: Edgar -->
                 <div class="col-md-6 col-lg-3 mb-4">
                     <div class="card h-100 text-center">
                         <img src="{{ url_for('static', filename='images/team/EFV_cuadrada_baja.jpg') }}" class="card-img-top rounded-circle mx-auto mt-3" alt="Edgar Franco" style="width: 100px; height: 100px;">
                         <div class="card-body">
                             <h5 class="card-title">Edgar Franco</h5>
-                            <p class="card-text">I am an Assistant Professor in the Department of Political Science at the University of Michigan. My research interests include Latin American politics, historical political economy, criminal violence, and indigenous politics. My work received the 2021 Heinz I. Eulau Award for the best article published in the APSR, and the 2022 Mary Parker Follett award for the best article on politics and history.  </p>
-                            <p class="card-text">My research is multi-method and combines statistical analysis, archival research, GIS, text analysis, machine learning, survey experiments, and lab-in-the-field approaches. </p>
-                            <p class="card-text">I am a co-PI of the Historical Institutions Lab, a faculty associate at the Center for Political Studies, and at the Michigan Institute for Data Science. I collaborate with the Poverty|Violence|Governance Lab (Stanford), the Digging Early Colonial History Project (University of Lancaster), and the Conflict & Peace, Research & Development (University of Michigan).</p>
+                            {% for paragraph in text.team.edgar %}
+                            <p class="card-text">{{ paragraph }}</p>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
-                <!-- Team Member 3 -->
+                <!-- Team Member 3: Juan -->
                 <div class="col-md-6 col-lg-3 mb-4">
                     <div class="card h-100 text-center">
                         <img src="{{ url_for('static', filename='images/team/JMS.jpg') }}" class="card-img-top rounded-circle mx-auto mt-3" alt="Juan Mata" style="width: 100px; height: 100px;">
                         <div class="card-body">
                             <h5 class="card-title">Juan Mata</h5>
-                            <p class="card-text">Juan is an energy and environment specialist with years of expertise in policy, program and project development. He has worked with numerous public and private entities, as well as multilateral organizations. Juan has provided consultancy services to governments and international organizations across Latin America. He currently serves as an associate consultant for the World Bank's Carbon Market Unit.</p>
-                            <p class="card-text"></p>
+                            {% for paragraph in text.team.juan %}
+                            <p class="card-text">{{ paragraph }}</p>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
-                <!-- Team Member 4 -->
+                <!-- Team Member 4: Nicolas -->
                 <div class="col-md-6 col-lg-3 mb-4">
                     <div class="card h-100 text-center">
                         <img src="{{ url_for('static', filename='images/team/NAM_cuadrada.jpg') }}" class="card-img-top rounded-circle mx-auto mt-3" alt="Nicolas Alcaraz" style="width: 100px; height: 100px;">
                         <div class="card-body">
                             <h5 class="card-title">Nicolas Alcaraz</h5>
-                            <p class="card-text">As a bioinformatician and computational biologist with extensive expertise in AI, algorithms, machine learning, and data science, I specialize in delivering innovative, data-driven solutions for the biomedical field. With a proven track record across genomics, epigenomics, transcriptomics, and clinical data analysis, I design and implement advanced computational pipelines that provide clients with clear, impactful insights to accelerate research and development.</p>
-                            <p class="card-text">My consultancy operates at the intersection of science and technology, bringing together knowledge from highly interdisciplinary fields. With experience collaborating alongside wet-lab scientists, mathematicians, biologists, IT specialists, and clinicians, I act as a bridge to facilitate effective communication and integration across disciplines. This collaborative approach ensures our solutions are not only technically robust but also aligned with scientific and business objectives.</p>                      
-                            <p class="card-text">Leveraging experience and publications in leading journals, including Nature Genetics, Nature Methods and Cell, among others, I am committed to translating complex data into strategic insights that propel advancements in personalized medicine, drug discovery, and precision health among other fields. My goal is to help clients unlock the full potential of their data, driving transformative progress in healthcare and beyond.</p>
-                        
+                            {% for paragraph in text.team.nicolas %}
+                            <p class="card-text">{{ paragraph }}</p>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -204,25 +167,22 @@
     <!-- Contact Section -->
     <section id="contact" class="mt-5">
         <div class="container">
-            <h2 class="text-center">Get in Touch</h2>
-            <p class="text-center">We'd love to hear from you. Please reach out with any inquiries at <a href="mailto:contact@anaplian.com">contact@anaplian.com</a>.</p>
+            <h2 class="text-center">{{ text.contact_title }}</h2>
+            <p class="text-center">{{ text.contact_subtitle }} <a href="mailto:contact@anaplian.com">contact@anaplian.com</a>.</p>
         </div>
     </section>
     
     <!-- Footer -->
     <footer class="bg-dark text-white py-4 mt-5">
         <div class="container text-center">
-            <p>&copy; 2025 Anaplian</p>
+            <p>© 2025 Anaplian</p>
             <div class="social-icons">
                 <a href="#" class="text-white mx-2"><i class="fab fa-twitter"></i></a>
                 <a href="https://www.linkedin.com/company/anaplian/about/" class="text-white mx-2"><i class="fab fa-linkedin"></i></a>
-                <!-- Add more social icons as needed -->
             </div>
         </div>
     </footer>
     
-
-    <!-- Bootstrap 5 JS Bundle (Includes Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

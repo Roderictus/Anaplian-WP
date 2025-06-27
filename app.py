@@ -47,6 +47,157 @@ land_cover_columns = [
     "Percentage_Mangrove", "Percentage_Moss_and_Lichen"
     ]
 
+INDEX_PAGE_TRANSLATIONS = {
+    'en': {
+        'title': "Anaplian - Research, Applied",
+        'meta_desc': "Anaplian - Research, applied.",
+        'lang_button': "Language",
+        'nav_home': "Home", 
+        'nav_who': "Who We Are", 
+        'nav_contact': "Contact", 
+        'nav_parks': "National Parks",
+        'hero_title': "Welcome to Anaplian",
+        'hero_subtitle': "Applying state-of-the-art research in geospatial and socio-economic fields to your company needs.",
+        'learn_more_button': "Learn More",
+        'parks_title': "National Parks Surveillance and Monitoring through Satellite Data",
+        'parks_subtitle': "Independent comparable automated data for Natural Protected Areas Surveillance and Monitoring.",
+        'learn_more_parks_button': "Learn More About National Parks",
+        'indonesia_title': "Indonesia National Parks",
+        'indonesia_subtitle': "Land Cover in Indonesia National Parks.",
+        'indonesia_button': "Indonesia National Parks",
+        'blog_title': "Blog",
+        'blog_subtitle': "Stay updated with our latest insights and developments in applied research and socio-economic solutions.",
+        'blog1_title': "National Parks: How Protected Are Our Natural Protected Areas?",
+        'blog1_desc': "Motivated by our passion for hiking and alerted by the visible deterioration of some routes, several members of the Anaplian team, together with Mexico en Datos, decided to carry out a diagnosis of the Natural Protected Areas due to the lack of official data.",
+        'blog2_title': "Developments in the Automated Dashboard for Monitoring National Parks",
+        'blog2_desc': "Anaplian begins the year 2025 with progress on one of our favorite public projects: the development of an automated dashboard for monitoring National Parks.",
+        'blog_button_main': "Go to Blog Post",
+        'blog_button_all': "View All Blog Posts",
+        'who_title': "Who We Are",
+        'contact_title': "Get in Touch",
+        'contact_subtitle': "We'd love to hear from you. Please reach out with any inquiries at",
+        'team': {
+            'rodrigo': [
+                "With 20 years of experience in data science, economics, and consulting, I created Anaplian to bring practical, data-driven insights to businesses.",
+                "My work has spanned various sectors, from economic impact studies to sustainability projects. I've led teams and managed projects for both public and private organizations, always focusing on delivering results that make a difference.",
+                "At Anaplian, I bring that same commitment to each client, ensuring our services are tailored to your specific needs and challenges. Anaplian is all about turning data into meaningful insights. Whether you need help with data analysis, financial modeling, or understanding the economic impact of your decisions, we're here to provide straightforward, reliable solutions. With our expertise, we aim to help your business thrive in today's complex, data-driven world."
+            ],
+            'edgar': [
+                "I am an Assistant Professor in the Department of Political Science at the University of Michigan. My research interests include Latin American politics, historical political economy, criminal violence, and indigenous politics. My work received the 2021 Heinz I. Eulau Award for the best article published in the APSR, and the 2022 Mary Parker Follett award for the best article on politics and history.",
+                "My research is multi-method and combines statistical analysis, archival research, GIS, text analysis, machine learning, survey experiments, and lab-in-the-field approaches.",
+                "I am a co-PI of the Historical Institutions Lab, a faculty associate at the Center for Political Studies, and at the Michigan Institute for Data Science. I collaborate with the Poverty|Violence|Governance Lab (Stanford), the Digging Early Colonial History Project (University of Lancaster), and the Conflict & Peace, Research & Development (University of Michigan)."
+            ],
+            'juan': [
+                "Juan is an energy and environment specialist with years of expertise in policy, program and project development. He has worked with numerous public and private entities, as well as multilateral organizations. Juan has provided consultancy services to governments and international organizations across Latin America. He currently serves as an associate consultant for the World Bank's Carbon Market Unit."
+            ],
+            'nicolas': [
+                "As a bioinformatician and computational biologist with extensive expertise in AI, algorithms, machine learning, and data science, I specialize in delivering innovative, data-driven solutions for the biomedical field. With a proven track record across genomics, epigenomics, transcriptomics, and clinical data analysis, I design and implement advanced computational pipelines that provide clients with clear, impactful insights to accelerate research and development.",
+                "My consultancy operates at the intersection of science and technology, bringing together knowledge from highly interdisciplinary fields. With experience collaborating alongside wet-lab scientists, mathematicians, biologists, IT specialists, and clinicians, I act as a bridge to facilitate effective communication and integration across disciplines. This collaborative approach ensures our solutions are not only technically robust but also aligned with scientific and business objectives.",
+                "Leveraging experience and publications in leading journals, including Nature Genetics, Nature Methods and Cell, among others, I am committed to translating complex data into strategic insights that propel advancements in personalized medicine, drug discovery, and precision health among other fields. My goal is to help clients unlock the full potential of their data, driving transformative progress in healthcare and beyond."
+            ]
+        }
+    },
+    'es': {
+        'title': "Anaplian - Investigación Aplicada",
+        'meta_desc': "Anaplian - Investigación aplicada.",
+        'lang_button': "Idioma",
+        'nav_home': "Inicio", 
+        'nav_who': "Quiénes Somos", 
+        'nav_contact': "Contacto", 
+        'nav_parks': "Parques Nacionales",
+        'hero_title': "Bienvenido a Anaplian",
+        'hero_subtitle': "Aplicando investigación de vanguardia en los campos geoespacial y socioeconómico a las necesidades de su empresa.",
+        'learn_more_button': "Conoce Más",
+        'parks_title': "Vigilancia y Monitoreo de Parques Nacionales mediante Datos Satelitales",
+        'parks_subtitle': "Datos automatizados, comparables e independientes para la vigilancia y monitoreo de Áreas Naturales Protegidas.",
+        'learn_more_parks_button': "Conoce Más sobre Parques Nacionales",
+        'indonesia_title': "Parques Nacionales de Indonesia",
+        'indonesia_subtitle': "Cobertura del suelo en los Parques Nacionales de Indonesia.",
+        'indonesia_button': "Parques Nacionales de Indonesia",
+        'blog_title': "Blog",
+        'blog_subtitle': "Manténgase actualizado con nuestras últimas ideas y desarrollos en investigación aplicada y soluciones socioeconómicas.",
+        'blog1_title': "Parques Nacionales ¿Qué tan protegidas están nuestras Áreas Naturales Protegidas?",
+        'blog1_desc': "Motivados por nuestra pasión por el senderismo y alertados por el deterioro visible de algunas rutas, varios integrantes del equipo de Anaplian, junto con México en Datos, decidimos realizar un diagnóstico de las Áreas Naturales Protegidas ante la falta de datos oficiales.",
+        'blog2_title': "Avances en el Tablero Automatizado para el Monitoreo de Parques Nacionales",
+        'blog2_desc': "Anaplian comienza el año 2025 con avances en uno de nuestros proyectos públicos favoritos: el desarrollo de un tablero automatizado para el monitoreo de Parques Nacionales.",
+        'blog_button_main': "Ir a la entrada del blog",
+        'blog_button_all': "Ver Todas las Entradas del Blog",
+        'who_title': "Quiénes Somos",
+        'contact_title': "Ponte en Contacto",
+        'contact_subtitle': "Nos encantaría saber de usted. Por favor, póngase en contacto con cualquier consulta en",
+        'team': {
+            'rodrigo': [
+                "Con 20 años de experiencia en ciencia de datos, economía y consultoría, creé Anaplian para brindar información práctica basada en datos a las empresas.",
+                "Mi trabajo ha abarcado varios sectores, desde estudios de impacto económico hasta proyectos de sostenibilidad. He liderado equipos y gestionado proyectos para organizaciones públicas y privadas, siempre enfocándome en entregar resultados que marquen la diferencia.",
+                "En Anaplian, mantengo ese mismo compromiso con cada cliente, asegurando que nuestros servicios estén adaptados a sus necesidades y desafíos específicos."
+            ],
+            'edgar': [
+                "Soy Profesor Asistente en el Departamento de Ciencias Políticas de la Universidad de Michigan. Mis intereses de investigación incluyen la política latinoamericana, la economía política histórica, la violencia criminal y la política indígena. Mi trabajo recibió el Premio Heinz I. Eulau 2021 al mejor artículo publicado en APSR y el premio Mary Parker Follett 2022 al mejor artículo sobre política e historia.",
+                "Mi investigación es multimétodo y combina análisis estadístico, investigación de archivos, SIG, análisis de texto, aprendizaje automático, experimentos de encuestas y enfoques de laboratorio en campo.",
+                "Soy co-investigador principal del Laboratorio de Instituciones Históricas, profesor asociado en el Centro de Estudios Políticos y en el Instituto de Ciencia de Datos de Michigan. Colaboro con el Laboratorio de Pobreza|Violencia|Gobernanza (Stanford), el Proyecto de Historia Colonial Temprana (Universidad de Lancaster) y el grupo de Investigación y Desarrollo de Conflicto y Paz (Universidad de Michigan)."
+            ],
+            'juan': [
+                "Juan es un especialista en energía y medio ambiente con años de experiencia en desarrollo de políticas, programas y proyectos. Ha trabajado con numerosas entidades públicas y privadas, así como con organizaciones multilaterales. Juan ha brindado servicios de consultoría a gobiernos y organizaciones internacionales en toda América Latina. Actualmente se desempeña como consultor asociado de la Unidad de Mercado de Carbono del Banco Mundial."
+            ],
+            'nicolas': [
+                "Como bioinformático y biólogo computacional con amplia experiencia en IA, algoritmos, aprendizaje automático y ciencia de datos, me especializo en ofrecer soluciones innovadoras basadas en datos para el campo biomédico. Con una trayectoria probada en genómica, epigenómica, transcriptómica y análisis de datos clínicos, diseño e implemento pipelines computacionales avanzados que proporcionan a los clientes información clara e impactante para acelerar la investigación y el desarrollo.",
+                "Mi consultoría opera en la intersección de la ciencia y la tecnología, reuniendo conocimientos de campos altamente interdisciplinarios. Con experiencia en colaboración con científicos de laboratorio, matemáticos, biólogos, especialistas en TI y clínicos, actúo como puente para facilitar la comunicación efectiva y la integración entre disciplinas.",
+                "Aprovechando la experiencia y publicaciones en revistas líderes, incluyendo Nature Genetics, Nature Methods y Cell, entre otras, estoy comprometido a traducir datos complejos en información estratégica que impulse avances en medicina personalizada, descubrimiento de fármacos y salud de precisión, entre otros campos."
+            ]
+        }
+    },
+    'fr': {
+        'title': "Anaplian - Recherche Appliquée",
+        'meta_desc': "Anaplian - Recherche appliquée.",
+        'lang_button': "Langue",
+        'nav_home': "Accueil", 
+        'nav_who': "Qui Nous Sommes", 
+        'nav_contact': "Contact", 
+        'nav_parks': "Parcs Nationaux",
+        'hero_title': "Bienvenue chez Anaplian",
+        'hero_subtitle': "Appliquer la recherche de pointe dans les domaines géospatial et socio-économique aux besoins de votre entreprise.",
+        'learn_more_button': "En Savoir Plus",
+        'parks_title': "Surveillance et Suivi des Parcs Nationaux par Données Satellitaires",
+        'parks_subtitle': "Données automatisées, comparables et indépendantes pour la surveillance et le suivi des Aires Naturelles Protégées.",
+        'learn_more_parks_button': "En Savoir Plus sur les Parcs Nationaux",
+        'indonesia_title': "Parcs Nationaux d'Indonésie",
+        'indonesia_subtitle': "Couverture terrestre dans les parcs nationaux d'Indonésie.",
+        'indonesia_button': "Parcs Nationaux d'Indonésie",
+        'blog_title': "Blog",
+        'blog_subtitle': "Restez à jour avec nos dernières perspectives et développements en recherche appliquée et solutions socio-économiques.",
+        'blog1_title': "Parcs Nationaux : Nos aires naturelles protégées sont-elles bien protégées ?",
+        'blog1_desc': "Motivés par notre passion pour la randonnée et alertés par la détérioration visible de certains sentiers, plusieurs membres de l'équipe d'Anaplian, en collaboration avec Mexico en Datos, ont décidé de réaliser un diagnostic des Aires Naturelles Protégées face au manque de données officielles.",
+        'blog2_title': "Développements du tableau de bord automatisé pour le suivi des parcs nationaux",
+        'blog2_desc': "Anaplian commence l'année 2025 avec des progrès sur l'un de nos projets publics préférés : le développement d'un tableau de bord automatisé pour le suivi des Parcs Nationaux.",
+        'blog_button_main': "Aller à l'article de blog",
+        'blog_button_all': "Voir Tous les Articles du Blog",
+        'who_title': "Qui Nous Sommes",
+        'contact_title': "Contactez-Nous",
+        'contact_subtitle': "Nous serions ravis de vous entendre. Veuillez nous contacter pour toute demande à",
+        'team': {
+            'rodrigo': [
+                "Avec 20 ans d'expérience en science des données, économie et conseil, j'ai créé Anaplian pour apporter des informations pratiques basées sur les données aux entreprises.",
+                "Mon travail s'est étendu à divers secteurs, des études d'impact économique aux projets de durabilité. J'ai dirigé des équipes et géré des projets pour des organisations publiques et privées, en me concentrant toujours sur l'obtention de résultats qui font la différence.",
+                "Chez Anaplian, je maintiens le même engagement envers chaque client, en veillant à ce que nos services soient adaptés à vos besoins et défis spécifiques."
+            ],
+            'edgar': [
+                "Je suis professeur assistant au Département de Sciences Politiques de l'Université du Michigan. Mes intérêts de recherche incluent la politique latino-américaine, l'économie politique historique, la violence criminelle et la politique autochtone. Mon travail a reçu le prix Heinz I. Eulau 2021 pour le meilleur article publié dans l'APSR et le prix Mary Parker Follett 2022 pour le meilleur article sur la politique et l'histoire.",
+                "Ma recherche est multi-méthode et combine analyse statistique, recherche d'archives, SIG, analyse de texte, apprentissage automatique, expériences d'enquête et approches de laboratoire sur le terrain.",
+                "Je suis co-chercheur principal du Laboratoire des Institutions Historiques, professeur associé au Centre d'Études Politiques et à l'Institut de Science des Données du Michigan. Je collabore avec le Laboratoire Pauvreté|Violence|Gouvernance (Stanford), le Projet d'Histoire Coloniale Précoce (Université de Lancaster) et le groupe de Recherche et Développement sur les Conflits et la Paix (Université du Michigan)."
+            ],
+            'juan': [
+                "Juan est un spécialiste de l'énergie et de l'environnement avec des années d'expertise dans le développement de politiques, de programmes et de projets. Il a travaillé avec de nombreuses entités publiques et privées, ainsi qu'avec des organisations multilatérales. Juan a fourni des services de conseil aux gouvernements et aux organisations internationales à travers l'Amérique latine. Il est actuellement consultant associé à l'Unité du Marché du Carbone de la Banque mondiale."
+            ],
+            'nicolas': [
+                "En tant que bioinformaticien et biologiste computationnel avec une vaste expertise en IA, algorithmes, apprentissage automatique et science des données, je me spécialise dans la fourniture de solutions innovantes basées sur les données pour le domaine biomédical. Avec une expérience éprouvée en génomique, épigénomique, transcriptomique et analyse de données cliniques, je conçois et implémente des pipelines computationnels avancés.",
+                "Mon activité de conseil opère à l'intersection de la science et de la technologie, rassemblant des connaissances de domaines hautement interdisciplinaires. Avec une expérience de collaboration avec des scientifiques de laboratoire, des mathématiciens, des biologistes, des spécialistes en TI et des cliniciens, j'agis comme un pont pour faciliter la communication et l'intégration entre les disciplines.",
+                "M'appuyant sur mon expérience et mes publications dans des revues de premier plan, notamment Nature Genetics, Nature Methods et Cell, je m'engage à traduire des données complexes en informations stratégiques qui font progresser la médecine personnalisée, la découverte de médicaments et la santé de précision."
+            ]
+        }
+    }
+}
+
+
 def sanitize_name(name):
     """
     Replace any sequence of non-alphanumeric characters with a single underscore.
@@ -159,12 +310,13 @@ def show_country(country_name):
 
 @app.route('/')
 def index():
+    # Get the language from the URL query, defaulting to 'en'
     lang = request.args.get('lang', 'en')
-    if lang == 'es':
-        return render_template('index_es.html')
-    elif lang == 'fr':
-        return render_template('index_fr.html')  
-    return render_template('index.html')
+    # Select the correct dictionary of translations, defaulting to English if lang is invalid
+    text_content = INDEX_PAGE_TRANSLATIONS.get(lang, INDEX_PAGE_TRANSLATIONS['en'])
+    
+    # Render the single index.html template, passing the language and text content
+    return render_template('index.html', lang=lang, text=text_content)
 
 @app.route("/national-parks", methods=["GET", "POST"])
 def national_parks():
