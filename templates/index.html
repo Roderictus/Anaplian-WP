@@ -55,13 +55,18 @@
         <div class="overlay"></div>
     </section>
     
-    <!-- National Parks Section -->
+    <!-- Mexico National Parks Section -->
     <section id="national-parks" class="mt-5 bg-light-turquoise">
         <div class="container text-center">
             <h2 class="mb-4">{{ text.parks_title }}</h2>
             <p class="lead">{{ text.parks_subtitle }}</p>
-            <!-- Update this link when ready -->
-            <a href="#" class="btn btn-orange btn-lg mt-3">{{ text.learn_more_parks_button }}</a>
+            {% if lang == 'en' %}
+                <a href="{{ url_for('national_parks_en') }}" class="btn btn-orange btn-lg mt-3">{{ text.learn_more_parks_button }}</a>
+            {% elif lang == 'fr' %}
+                <a href="{{ url_for('national_parks_fr') }}" class="btn btn-orange btn-lg mt-3">{{ text.learn_more_parks_button }}</a>
+            {% else %}
+                <a href="{{ url_for('national_parks') }}" class="btn btn-orange btn-lg mt-3">{{ text.learn_more_parks_button }}</a>
+            {% endif %}
         </div>
     </section>
 
@@ -71,6 +76,15 @@
             <h2 class="mb-4">{{ text.indonesia_title }}</h2>
             <p class="lead">{{ text.indonesia_subtitle }}</p>
             <a href="{{ url_for('show_country', country_name='indonesia', lang=lang) }}" class="btn btn-orange btn-lg mt-3">{{ text.indonesia_button }}</a>
+        </div>
+    </section>
+
+    <!-- Madagascar Section -->
+    <section id="madagascar-parks" class="mt-5 bg-light-turquoise">
+        <div class="container text-center">
+            <h2 class="mb-4">{{ text.madagascar_title }}</h2>
+            <p class="lead">{{ text.madagascar_subtitle }}</p>
+            <a href="{{ url_for('show_country', country_name='madagascar', lang=lang) }}" class="btn btn-orange btn-lg mt-3">{{ text.madagascar_button }}</a>
         </div>
     </section>
 
